@@ -1,7 +1,21 @@
 
 # **Diner Hash: An Educational Computer Science Game**
 
-
+## Table of Contents
+- [Project Roadmap](#project-roadmap)
+  - [Goals for Iteration I](#goals-for-iteration-i)
+    - [Iteration I Guidelines](#iteration-i-guidelines)
+  - [Goals for Iteration II](#goals-for-iteration-ii)
+    - [Iteration II Guidelines](#iteration-ii-guidelines)
+  - [Goals for Iteration II](#goals-for-iteration-iii)
+    - [Iteration II Guidelines](#iteration-iii-guidelines)
+  - [Overflow I Goals](#overflow-i-goals)
+    - [Overflow I Guidelines](#overflow-i-guidelines)
+  - [Overflow II Goals](#overflow-ii-goals)
+    - [Overflow II Guidelines](#overflow-ii-guidelines)
+- [Contributors](#contributors)
+- [Coding Conventions](#coding-conventions)
+- [Helpful Resources](#helpful-resources)
 
 Diner Hash is an educational game to teach prospective students about the Hash
 table data structure in a gamified form.
@@ -25,7 +39,7 @@ in chronological order for completion.
 
 User interactions (movement, object collision, object retrieval/placement)
 
-#### Guideline:
+#### Iteration I Guidelines
 
 ~~~~
 
@@ -78,7 +92,7 @@ User interactions (movement, object collision, object retrieval/placement)
 
 Foundational game logic (end conditions, “hash station” functionality)
 
-#### Guideline:
+#### Iteration II Guidelines
 
 ~~~~
 
@@ -94,7 +108,7 @@ Foundational game logic (end conditions, “hash station” functionality)
 
 Game framework (main menu/end game screens, scoreboard, timer). 
 
-#### Guideline:
+#### Iteration III Guidelines
 
 ~~~~
 
@@ -106,14 +120,14 @@ Game framework (main menu/end game screens, scoreboard, timer).
 
   
 
-### **Overflow goals I**
+### **Overflow I Goals**
 *Due to the constraint of time, these tasks are moved to overflow goals.
 Development time is limited to 3 weeks.*
 
 Game feedback (implement ‘Excellent’, and ‘Good’ feedback labels, implement pop-
 ups explaining user interaction with hashmap abilities)
 
-#### Guideline:
+#### Overflow I Guidlines
 
 ~~~~
 
@@ -125,13 +139,13 @@ ups explaining user interaction with hashmap abilities)
 
   
 
-### **Overflow Goals II**
+### **Overflow II Goals**
 *Due to the constraint of time, these tasks are moved to overflow goals.
 Development time is limited to 3 weeks.*
 
 Sprite implementations and graphical animations
 
-#### Guideline:
+#### Overflow II Guidelines
 
 ~~~~
 
@@ -142,7 +156,7 @@ Sprite implementations and graphical animations
 	Fibonacci Hours: 21
 
   
-**Contributers**
+## Contributers
 
 Jillian David - *Scrum Master*
 
