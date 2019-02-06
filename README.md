@@ -1,7 +1,7 @@
 
 # **Diner Hash: An Educational Computer Science Game**
 
-  
+
 
 Diner Hash is an educational game to teach prospective students about the Hash table data structure in a gamified form.
 
