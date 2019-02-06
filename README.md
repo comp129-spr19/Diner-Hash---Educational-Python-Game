@@ -156,7 +156,7 @@ Sprite implementations and graphical animations
 	Fibonacci Hours: 21
 
   
-## Contributers
+## Contributors
 
 Jillian David - *Scrum Master*
 
