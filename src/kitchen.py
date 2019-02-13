@@ -1,7 +1,6 @@
 from pygame import (
-    display,
-    event,
-    image
+    image,
+    key
 )
 
 
@@ -17,13 +16,10 @@ class Kitchen:
         self.y = self.__IMAGE_Y__    # y coordinate of image
         self._image_surf = None
 
-    def get_image(self):
-        return self._image_surf
-
     def on_init(self):
         self._image_surf = image.load(self.__IMAGE_FILE__).convert()
 
-    def on_event(self, e):
+    def on_event(self, keys):
         # TODO: pass event to objects in kitchen
         pass
 
@@ -34,7 +30,6 @@ class Kitchen:
         surface.blit(self._image_surf, (self.x, self.y),
                      (self.x, self.y,
                      surface.get_width(), surface.get_height()))
-        display.flip()
 
     def on_cleanup(self):
         # TODO: do objects need to cleanup?

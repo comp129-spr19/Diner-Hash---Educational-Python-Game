@@ -172,12 +172,13 @@ Dharak Vasavda - *Team Member*
 
 See [this](https://chris.beams.io/posts/git-commit/) entertaining link on writing descriptive commit messages
 
-All Python files should follow the Pep8 standard
+All Python files should follow the PyCodeStyle standard
 
 Lines should be wrapped at 80 characters for all other file types
 
 ## Helpful Resources
 
+- [Commit Messages](https://chris.beams.io/posts/git-commit/)
 - [Sprite Intro](https://www.pygame.org/docs/tut/SpriteIntro.html)
 - [Game Development with PyGame](https://pythonspot.com/game-development-with-pygame/)
 - [Introduction to JavaFx for Game Development](https://gamedevelopment.tutsplus.com/tutorials/introduction-to-javafx-for-game-development--cms-23835)
