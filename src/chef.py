@@ -1,4 +1,10 @@
 from pygame import (
+    # imported constants
+    K_DOWN,
+    K_LEFT,
+    K_RIGHT,
+    K_UP,
+
     display,
     image,
     key
@@ -19,8 +25,17 @@ class Chef:
         self._image_surf = image.load(self.__IMAGE_FILE__).convert_alpha()
 
     def on_event(self, keys):
-        # TODO: handle key pressed events
-        pass
+        if (keys[K_RIGHT]):
+            self.moveRight()
+
+        if (keys[K_LEFT]):
+            self.moveLeft()
+
+        if (keys[K_UP]):
+            self.moveUp()
+
+        if (keys[K_DOWN]):
+            self.moveDown()
 
     def on_loop(self):
         pass
@@ -30,12 +45,12 @@ class Chef:
 
     def moveRight(self):
         self.x = self.x + self.__SPEED__
- 
+
     def moveLeft(self):
         self.x = self.x - self.__SPEED__
- 
+
     def moveUp(self):
         self.y = self.y - self.__SPEED__
- 
+
     def moveDown(self):
         self.y = self.y + self.__SPEED__
