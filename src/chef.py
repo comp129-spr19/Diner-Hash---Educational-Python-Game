@@ -27,3 +27,15 @@ class Chef:
 
     def on_render(self, surface):
         surface.blit(self._image_surf, (self.x, self.y))
+
+    def moveRight(self):
+        self.x = self.x + self.__SPEED__
+ 
+    def moveLeft(self):
+        self.x = self.x - self.__SPEED__
+ 
+    def moveUp(self):
+        self.y = self.y - self.__SPEED__
+ 
+    def moveDown(self):
+        self.y = self.y + self.__SPEED__

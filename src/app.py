@@ -5,7 +5,7 @@ from chef import (
 from kitchen import (
     Kitchen
 )
-
+from pygame.locals import *
 from pygame import (
     # imported constants
     HWSURFACE,
@@ -77,6 +77,23 @@ class App:
             keys = key.get_pressed()
 
             self.on_event(keys)
+
+            if (keys[K_RIGHT]):
+                self.chef.moveRight();
+
+            if (keys[K_LEFT]):
+                self.chef.moveLeft();
+
+            if (keys[K_UP]):
+                self.chef.moveUp();
+
+            if (keys[K_DOWN]):
+                self.chef.moveDown();
+
+            if (keys[K_ESCAPE]):
+                self._running = False
+
+            
 
             self.on_loop()
             self.on_render()
