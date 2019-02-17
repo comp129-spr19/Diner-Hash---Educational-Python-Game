@@ -1,3 +1,7 @@
+from diner_sprite import (
+     DinerSprite
+)
+
 from pygame import (
     # imported constants
     K_DOWN,
@@ -11,18 +15,16 @@ from pygame import (
 )
 
 
-class Chef:
+class Chef(DinerSprite):
 
     __IMAGE_FILE__ = "../imgs/chef.png"
     __SPEED__ = 1
 
     def __init__(self, x, y):
-        self.x = x              # starting x coordinate of chef
-        self.y = y              # starting y coordinate of chef
-        self._image_surf = None
+        super(Chef, self).__init__(x, y)
 
     def on_init(self):
-        self._image_surf = image.load(self.__IMAGE_FILE__).convert_alpha()
+        self.image = image.load(self.__IMAGE_FILE__).convert_alpha()
 
     def on_event(self, keys):
         if (keys[K_RIGHT]):
@@ -37,11 +39,10 @@ class Chef:
         if (keys[K_DOWN]):
             self.moveDown()
 
-    def on_loop(self):
-        pass
-
-    def on_render(self, surface):
-        surface.blit(self._image_surf, (self.x, self.y))
+    def handle_collsion(self, sprite):
+        # Chef recoils in disgust!
+        self.x = self.x + 50
+        print("What is that!?")
 
     def moveRight(self):
         self.x = self.x + self.__SPEED__
