@@ -32,5 +32,5 @@ class Kitchen:
                      surface.get_width(), surface.get_height()))
 
     def on_cleanup(self):
-        # TODO: do objects need to cleanup?
+        # TODO: do objects need to cleanup
         pass
