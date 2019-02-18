@@ -1,8 +1,8 @@
 from enum import (
-	Enum
+    Enum
 )
 
 
 class FoodType(Enum):
-	BURGER = 1
-	# TODO: add more food types
+    BURGER = 1
+    # TODO: add more food types

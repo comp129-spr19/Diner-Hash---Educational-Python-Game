@@ -1,29 +1,34 @@
 from diner_sprite import (
-	DinerSprite
+    DinerSprite
 )
 
 from food_type import (
-	FoodType
+    FoodType
 )
 
 from pygame import (
-	image
+    image
 )
 
+
 class Food(DinerSprite):
-	# class variables
-	dict_image = {
-		FoodType.BURGER : "../imgs/burger.png"
-	}
+    # class variables
+    dict_image = {
+        FoodType.BURGER: "../imgs/burger.png"
+    }
 
-	def __init__(self, x, y, f_type):
-		super(Food, self).__init__(x, y)
+    def __init__(self, x, y, f_type):
+        super(Food, self).__init__(x, y)
 
-		self.f_type = f_type
+        self.f_type = f_type
 
-	def on_init(self):
-		image_path = self.dict_image.get(self.f_type)
-		self.image = image.load(image_path).convert_alpha()
+    def on_init(self):
+        image_path = self.dict_image.get(self.f_type)
+        self.image = image.load(image_path).convert_alpha()
+        self.rect = self.image.get_rect(topleft=(self.x, self.y))
 
-#update image
-	#x and y coordinates
+    def move(self, offset):
+        self.x += offset[0]
+        self.y += offset[1]
+
+        self.rect = self.rect.move(offset)

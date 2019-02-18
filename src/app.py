@@ -15,6 +15,8 @@ from pygame import (
     quit
 )
 
+import sprite_cluster as sc
+
 
 class App:
 
@@ -26,6 +28,9 @@ class App:
         self._running = True
         self._display_surf = None
 
+        # initialize sprite cluster
+        sc.__init__()
+
     def on_init(self):
         init()
         self._display_surf = display.set_mode(
@@ -35,6 +40,8 @@ class App:
         self.kitchen = Kitchen()
         self.kitchen.on_init()
 
+        sc.on_init()
+
         self._running = True
 
     def on_event(self, keys):
@@ -42,13 +49,16 @@ class App:
             self._running = False
         else:
             self.kitchen.on_event(keys)
+            sc.on_event(keys)
 
     def on_loop(self):
         self.kitchen.on_loop()
+        sc.on_loop()
 
     def on_render(self):
         # TODO: should kitchen only render once?
         self.kitchen.on_render(self._display_surf)
+        sc.on_render(self._display_surf)
 
         # update display to register all changes
         display.flip()
