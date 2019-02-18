@@ -1,7 +1,16 @@
+from diner_sprite import (
+     DinerSprite
+)
+
+from food import (
+    Food
+)
+
 from pygame import (
     # imported constants
     K_DOWN,
     K_LEFT,
+    K_SPACE,
     K_RIGHT,
     K_UP,
 
@@ -10,19 +19,23 @@ from pygame import (
     key
 )
 
+from pygame.sprite import (
+    spritecollide
+)
 
-class Chef:
+
+class Chef(DinerSprite):
 
     __IMAGE_FILE__ = "../imgs/chef.png"
     __SPEED__ = 1
 
     def __init__(self, x, y):
-        self.x = x              # starting x coordinate of chef
-        self.y = y              # starting y coordinate of chef
-        self._image_surf = None
+        super(Chef, self).__init__(x, y)
 
     def on_init(self):
-        self._image_surf = image.load(self.__IMAGE_FILE__).convert_alpha()
+        self.image = image.load(self.__IMAGE_FILE__).convert_alpha()
+        self.rect = self.image.get_rect(topleft=(self.x, self.y))
+        self.carry_food = None
 
     def on_event(self, keys):
         if (keys[K_RIGHT]):
@@ -37,20 +50,62 @@ class Chef:
         if (keys[K_DOWN]):
             self.moveDown()
 
-    def on_loop(self):
-        pass
-
-    def on_render(self, surface):
-        surface.blit(self._image_surf, (self.x, self.y))
+        if (keys[K_SPACE]):
+            self.handle_carry_food()
 
     def moveRight(self):
-        self.x = self.x + self.__SPEED__
+        self.x += self.__SPEED__
+        self.rect = self.rect.move(self.__SPEED__, 0)
+
+        self.move_carry_food(self.__SPEED__, 0)
 
     def moveLeft(self):
-        self.x = self.x - self.__SPEED__
+        self.x -= self.__SPEED__
+        self.rect = self.rect.move(-self.__SPEED__, 0)
+
+        self.move_carry_food(-self.__SPEED__, 0)
 
     def moveUp(self):
-        self.y = self.y - self.__SPEED__
+        self.y -= self.__SPEED__
+        self.rect = self.rect.move(0, -self.__SPEED__)
+
+        self.move_carry_food(0, -self.__SPEED__)
 
     def moveDown(self):
-        self.y = self.y + self.__SPEED__
+        self.y += self.__SPEED__
+        self.rect = self.rect.move(0, self.__SPEED__)
+
+        self.move_carry_food(0, self.__SPEED__)
+
+    def handle_carry_food(self):
+        if self.carry_food is None:
+            self.pickup_food()
+        else:
+            self.drop_food()
+
+    def pickup_food(self):
+        from sprite_cluster import get_chef_collisions
+
+        collisions = get_chef_collisions()
+
+        for obj in collisions:
+            if obj is not None and isinstance(obj, Food) and \
+                                                    obj is not self.carry_food:
+                self.carry_food = obj
+                self.__center_food__()
+                break
+
+    def drop_food(self):
+        self.carry_food = None
+
+    def move_carry_food(self, x_offset, y_offset):
+        if self.carry_food is not None:
+            self.carry_food.move((x_offset, y_offset))
+
+    def __center_food__(self):
+        # TODO: use // instead for integer?
+        self.carry_food.set_coordinates(
+            self.x + (self.get_width() / 2) -
+            (self.carry_food.get_width() / 2),
+            self.y + (self.get_height() / 2) -
+            (self.carry_food.get_height() / 2))

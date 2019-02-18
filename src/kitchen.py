@@ -1,6 +1,20 @@
+from food import (
+    Food
+)
+
+from food_type import (
+    FoodType
+)
+
 from pygame import (
     image,
     key
+)
+
+from pygame.sprite import (
+    Group,
+
+    spritecollide
 )
 
 
@@ -15,12 +29,13 @@ class Kitchen:
         self.x = self.__IMAGE_X__    # x coordinate of image
         self.y = self.__IMAGE_Y__    # y coordinate of image
         self._image_surf = None
+        self.food_orders = []
+        self.food_group = Group()
 
     def on_init(self):
         self._image_surf = image.load(self.__IMAGE_FILE__).convert()
 
     def on_event(self, keys):
-        # TODO: pass event to objects in kitchen
         pass
 
     def on_loop(self):

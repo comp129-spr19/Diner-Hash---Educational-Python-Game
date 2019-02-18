@@ -1,7 +1,3 @@
-from chef import (
-    Chef
-)
-
 from kitchen import (
     Kitchen
 )
@@ -19,6 +15,8 @@ from pygame import (
     quit
 )
 
+import sprite_cluster as sc
+
 
 class App:
 
@@ -26,12 +24,12 @@ class App:
     __WINDOW_WIDTH__ = 800
     __WINDOW_HEIGHT__ = 800
 
-    __C_START_X__ = 400  # chef starting x coordinate
-    __C_START_Y__ = 400  # chef starting y coordinate
-
     def __init__(self):
         self._running = True
         self._display_surf = None
+
+        # initialize sprite cluster
+        sc.__init__()
 
     def on_init(self):
         init()
@@ -42,8 +40,7 @@ class App:
         self.kitchen = Kitchen()
         self.kitchen.on_init()
 
-        self.chef = Chef(self.__C_START_X__, self.__C_START_Y__)
-        self.chef.on_init()
+        sc.on_init()
 
         self._running = True
 
@@ -52,15 +49,16 @@ class App:
             self._running = False
         else:
             self.kitchen.on_event(keys)
-            self.chef.on_event(keys)
+            sc.on_event(keys)
 
     def on_loop(self):
-        pass
+        self.kitchen.on_loop()
+        sc.on_loop()
 
     def on_render(self):
         # TODO: should kitchen only render once?
         self.kitchen.on_render(self._display_surf)
-        self.chef.on_render(self._display_surf)
+        sc.on_render(self._display_surf)
 
         # update display to register all changes
         display.flip()
