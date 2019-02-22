@@ -15,6 +15,8 @@ from pygame import (
     quit
 )
 
+import feedback as fb
+
 import sprite_cluster as sc
 
 
@@ -28,7 +30,8 @@ class App:
         self._running = True
         self._display_surf = None
 
-        # initialize sprite cluster
+        # initialize application entities
+        fb.__init__()
         sc.__init__()
 
     def on_init(self):
