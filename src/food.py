@@ -12,7 +12,7 @@ from pygame import (
 
 
 class Food(DinerSprite):
-    # class variables
+    # TODO: refactor this to food_types.py
     dict_image = {
         FoodType.BURGER: "../imgs/burger.png"
     }
