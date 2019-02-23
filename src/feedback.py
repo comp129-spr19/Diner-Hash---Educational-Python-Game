@@ -16,6 +16,7 @@ from text_box import (
     TextBox
 )
 
+# initialize font environment
 init()
 
 # class constants
