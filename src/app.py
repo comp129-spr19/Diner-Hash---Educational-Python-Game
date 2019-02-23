@@ -15,16 +15,17 @@ from pygame import (
     quit
 )
 
+from system_utils import (
+    WINDOW_HEIGHT,
+    WINDOW_WIDTH
+)
+
 import feedback as fb
 
 import sprite_cluster as sc
 
 
 class App:
-
-    # internal constants
-    __WINDOW_WIDTH__ = 800
-    __WINDOW_HEIGHT__ = 800
 
     def __init__(self):
         self._running = True
@@ -37,7 +38,7 @@ class App:
     def on_init(self):
         init()
         self._display_surf = display.set_mode(
-            (self.__WINDOW_WIDTH__, self.__WINDOW_HEIGHT__), HWSURFACE)
+            (WINDOW_WIDTH, WINDOW_HEIGHT), HWSURFACE)
 
         # initialize class variables
         self.kitchen = Kitchen()
@@ -62,7 +63,7 @@ class App:
         # TODO: should kitchen only render once?
         self.kitchen.on_render(self._display_surf)
         sc.on_render(self._display_surf)
-
+        fb.on_render(self._display_surf)
         # update display to register all changes
         display.flip()
 

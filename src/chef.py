@@ -1,5 +1,5 @@
 from diner_sprite import (
-     DinerSprite
+    DinerSprite
 )
 
 from feedback import (
@@ -8,9 +8,9 @@ from feedback import (
     show_neg_feedback
 )
 
-from feedback_msg.chef_feedback_msgs.py import (
-    GRAB_TICKET
-)
+# from feedback_msg.chef_feedback_msgs.py import (
+#     GRAB_TICKET
+# )
 
 from food import (
     Food
@@ -37,7 +37,7 @@ from pygame.sprite import (
 class Chef(DinerSprite):
 
     __IMAGE_FILE__ = "../imgs/chef.png"
-    __SPEED__ = 1
+    __SPEED__ = 8
 
     def __init__(self, x, y):
         super(Chef, self).__init__(x, y)
@@ -100,9 +100,10 @@ class Chef(DinerSprite):
 
         for obj in collisions:
             if obj is not None and isinstance(obj, Food) and \
-                                                    obj is not self.carry_food:
+                    obj is not self.carry_food:
                 self.carry_food = obj
                 self.__center_food__()
+                show_pos_feedback('Congratulations you picked up an item')
                 break
 
     def drop_food(self):
