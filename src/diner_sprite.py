@@ -6,7 +6,7 @@ from pygame.sprite import (
     Sprite
 )
 
-# handles importing sprite
+
 class DinerSprite(Sprite):
 
     def __init__(self, x, y):
