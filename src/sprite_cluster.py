@@ -20,16 +20,23 @@ from pygame.sprite import (
     spritecollide
 )
 
+from order_window import (
+    OrderWindow
+)
+
 
 chef = None
 countertop_group = None
 food_group = None
 orders = None
+order_window = None
 # window = Window()
 
 # Internal constants
 __CHEF_START_X__ = 400  # chef starting x coordinate
 __CHEF_START_Y__ = 400  # chef starting y coordinate
+__ORDER_WINDOW_X__ = 400  # Order window starting x coordinate
+__ORDER_WINDOW_Y__ = 0  # Order window starting y coordinate
 
 
 def add_food(food):
@@ -97,8 +104,10 @@ def on_init():
     global countertop_group
     global food_group
     global orders
+    global order_window
 
     chef.on_init()
+    order_window.on_init()
 
     for countertop in countertop_group:
         countertop.on_init()
@@ -133,8 +142,11 @@ def on_loop():
     global countertop_group
     global food_group
     global orders
+    global order_window
 
     chef.on_loop()
+
+    order_window.on_loop()
 
     for countertop in countertop_group:
         countertop.on_loop()
@@ -154,6 +166,8 @@ def on_render(surface):
 
     chef.on_render(surface)
 
+    order_window.on_render(surface)
+
     for countertop in countertop_group:
         countertop.on_render(surface)
 
@@ -169,7 +183,7 @@ def __init__():
     __init_food_group__()
     __init_countertop_group__()
     __init_orders__()
-
+    __init_order_window__()
 
 def __init_chef__():
     global chef
@@ -204,3 +218,9 @@ def __init_countertop_group__():
 def __init_orders__():
     global orders
     orders = []
+
+def __init_order_window__():
+    global order_window
+    global __ORDER_WINDOW_X__
+    global __ORDER_WINDOW_Y__
+    order_window = OrderWindow(__ORDER_WINDOW_X__, __ORDER_WINDOW_Y__)

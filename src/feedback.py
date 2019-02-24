@@ -61,6 +61,10 @@ def show_info_feedback(string):
 
     text_boxes.append(tb)
 
+def show_order_feedback(string):
+    # TODO use blue outline (width =2) right here
+    text = FONT.render(string, True, WHITE, BLUE)
+    tb = TextBox(GREEN, text)
 
 def on_render(surface):
     # TODO dynamically place text boxes
