@@ -48,12 +48,12 @@ class App:
 
         self._running = True
 
-    def on_event(self, keys):
+    def on_event(self, keys, event):
         if keys[K_ESCAPE]:
             self._running = False
         else:
             self.kitchen.on_event(keys)
-            sc.on_event(keys)
+            sc.on_event(keys, event)
 
     def on_loop(self):
         self.kitchen.on_loop()
@@ -78,7 +78,7 @@ class App:
             event.pump()
             keys = key.get_pressed()
 
-            self.on_event(keys)
+            self.on_event(keys, event)
             self.on_loop()
             self.on_render()
 

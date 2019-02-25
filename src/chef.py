@@ -23,14 +23,20 @@ from pygame import (
     K_SPACE,
     K_RIGHT,
     K_UP,
+    KEYDOWN,
 
     display,
     image,
-    key
+    key,
+    event
 )
 
 from pygame.sprite import (
     spritecollide
+)
+
+from time import (
+    sleep
 )
 
 
