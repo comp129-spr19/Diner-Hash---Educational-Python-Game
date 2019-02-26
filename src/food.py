@@ -14,7 +14,10 @@ from pygame import (
 class Food(DinerSprite):
     # class variables
     dict_image = {
-        FoodType.BURGER: "../imgs/burger.png"
+        FoodType.BURGER: "../imgs/burger.png",
+        FoodType.TACO: "../imgs/taco.png",
+        FoodType.PIZZA: "../imgs/pizza.png",
+        FoodType.HOTDOG: "../imgs/hotdog.png"
     }
 
     def __init__(self, x, y, f_type):

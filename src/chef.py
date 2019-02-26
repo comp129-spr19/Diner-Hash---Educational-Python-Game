@@ -1,3 +1,7 @@
+from countertop import (
+    Countertop
+)
+
 from diner_sprite import (
     DinerSprite
 )
@@ -6,6 +10,10 @@ from feedback import (
     show_info_feedback,
     show_pos_feedback,
     show_neg_feedback
+)
+
+from order_window import (
+    OrderWindow
 )
 
 # from feedback_msg.chef_feedback_msgs.py import (
@@ -43,7 +51,7 @@ from time import (
 class Chef(DinerSprite):
 
     __IMAGE_FILE__ = "../imgs/chef.png"
-    __SPEED__ = 8
+    __SPEED__ = 4
 
     def __init__(self, x, y):
         super(Chef, self).__init__(x, y)
@@ -104,16 +112,33 @@ class Chef(DinerSprite):
 
         collisions = get_chef_collisions()
 
+        # for obj in collisions:
+        #     if obj is not None and isinstance(obj, Food) and \
+        #             obj is not self.carry_food:
+        #         self.carry_food = obj
+        #         self.__center_food__()
+        #         show_pos_feedback('Congratulations you picked up an item')
+        #         break
+
         for obj in collisions:
-            if obj is not None and isinstance(obj, Food) and \
+            if obj is not None and isinstance(obj, Countertop) and \
                     obj is not self.carry_food:
-                self.carry_food = obj
+                self.carry_food = obj.food
                 self.__center_food__()
-                show_pos_feedback('Congratulations you picked up an item')
+                show_pos_feedback('Congratulations you picked up \
+                    an item from the counter')
                 break
 
     def drop_food(self):
-        self.carry_food = None
+        from sprite_cluster import get_chef_collisions
+
+        collisions = get_chef_collisions()
+
+        for obj in collisions:
+            if obj is not None and isinstance(obj, OrderWindow):
+                self.carry_food = None
+                show_pos_feedback('Congratulations you put an item \
+                    into the order window.')
 
     def move_carry_food(self, x_offset, y_offset):
         if self.carry_food is not None:

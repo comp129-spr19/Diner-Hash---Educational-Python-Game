@@ -17,7 +17,8 @@ from food_type import (
 from pygame.sprite import (
     Group,
 
-    spritecollide
+    spritecollide,
+    collide_rect
 )
 
 from order_window import (
@@ -89,6 +90,11 @@ def get_chef_collisions():
     global chef
     global food_group
     global countertop_group
+    global order_window
+
+    diner_features = Group()
+
+    diner_features.add([order_window])
 
     collision_items = []
 
@@ -99,6 +105,10 @@ def get_chef_collisions():
     countertop_collisions = spritecollide(chef, countertop_group, False)
     if countertop_collisions is not None:
         collision_items += countertop_collisions
+
+    features_collisions = spritecollide(chef, diner_features, False)
+    if features_collisions is not None:
+        collision_items += features_collisions
 
     return collision_items
 
@@ -201,11 +211,6 @@ def __init_chef__():
 def __init_food__():
     global food_group
 
-    # TODO: remove after sprint 2
-    food = Food(100, 200, FoodType.BURGER)
-
-    add_food(food)
-
 
 def __init_food_group__():
     global food_group
@@ -219,15 +224,18 @@ def __init_countertop__():
     global countertop_group
 
     # TODO: expand implementation to allow for multiple countertops
-    countertop = Countertop(200, 400)
+    countertop = Countertop(200, 400, FoodType.BURGER)
+    countertop1 = Countertop(350, 400, FoodType.TACO)
+    countertop2 = Countertop(500, 400, FoodType.PIZZA)
+
     add_countertop(countertop)
+    add_countertop(countertop1)
+    add_countertop(countertop2)
 
     # TODO: use the food image size in centering
-    food_x = countertop.x + (countertop.get_width() / 2)
-    food_y = countertop.y + (countertop.get_height() / 2)
-    food = Food(food_x, food_y, FoodType.BURGER)
-    countertop.food = food
-    add_food(food)
+    add_food(countertop.return_food())
+    add_food(countertop1.return_food())
+    add_food(countertop2.return_food())
 
 
 def __init_countertop_group__():
