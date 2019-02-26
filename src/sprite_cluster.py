@@ -49,7 +49,7 @@ window_group = None
 
 # Internal constants
 __CHEF_START_X__ = 400          # chef starting x coordinate
-__CHEF_START_Y__ = 400          # chef starting y coordinate
+__CHEF_START_Y__ = 200          # chef starting y coordinate
 __HASHER_START_X__ = 50         # hasher starting x coordinate
 __HASHER_START_Y__ = 200        # hasher starting y coordinate
 __COUNTERTOP_WIDTH__ = 100      # TODO: FIND NON-HARD-CODED SOLUTION
@@ -212,13 +212,13 @@ def __init_window_group__():
     window_group = Group()
 
     ticket_window = TicketWindow(__TICKET_WINDOW_X__, __TICKET_WINDOW_Y__)
-    
+
     # TODO: remove hardcoded ticket call after demo
     ticket = Ticket("ON THE SLIDE")
     ticket_window.add_ticket(ticket)
 
     order_window = OrderWindow(__ORDER_WINDOW_X__, __ORDER_WINDOW_Y__)
-    
+
     hasher = Hasher(__HASHER_START_X__, __HASHER_START_Y__)
 
     add_window(ticket_window)
