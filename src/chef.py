@@ -12,16 +12,30 @@ from feedback import (
     show_neg_feedback
 )
 
+from feedback_msgs.chef_feedback_msgs import (
+    ALREADY_GOT_FOOD,
+    GOT_FOOD,
+    GOT_TICKET,
+    GOT_NO_TICKET,
+    GOT_TRANSLATED_TICKET,
+    INCOMPLETE_ORDER,
+    NEED_TICKET
+)
+
+from food import (
+    Food
+)
+
+from hasher import (
+    Hasher
+)
+
 from order_window import (
     OrderWindow
 )
 
-# from feedback_msg.chef_feedback_msgs.py import (
-#     GRAB_TICKET
-# )
-
-from food import (
-    Food
+from ticket_window import (
+    TicketWindow
 )
 
 from pygame import (
@@ -43,10 +57,6 @@ from pygame.sprite import (
     spritecollide
 )
 
-from time import (
-    sleep
-)
-
 
 class Chef(DinerSprite):
 
@@ -60,6 +70,7 @@ class Chef(DinerSprite):
         self.image = image.load(self.__IMAGE_FILE__).convert_alpha()
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
         self.carry_food = None
+        self.ticket = None
 
     def on_event(self, keys):
         if (keys[K_RIGHT]):
@@ -75,7 +86,7 @@ class Chef(DinerSprite):
             self.moveDown()
 
         if (keys[K_SPACE]):
-            self.handle_carry_food()
+            self.handle_interaction()
 
     def moveRight(self):
         self.x += self.__SPEED__
@@ -101,50 +112,71 @@ class Chef(DinerSprite):
 
         self.move_carry_food(0, self.__SPEED__)
 
-    def handle_carry_food(self):
+    def handle_interaction(self):
+        from sprite_cluster import get_chef_collisions
+
+        collisions = get_chef_collisions()
+
+        for obj in collisions:
+            if isinstance(obj, Countertop):
+                self.handle_countertop_interaction(obj)
+            elif isinstance(obj, TicketWindow):
+                self.handle_ticket_window_interaction(obj)
+            elif isinstance(obj, OrderWindow):
+                self.handle_order_window_interaction(obj)
+            elif isinstance(obj, Hasher):
+                self.handle_hasher_interaction(obj)
+            else:
+                continue
+
+    def handle_countertop_interaction(self, countertop):
         if self.carry_food is None:
-            self.pickup_food()
+            self.carry_food = countertop.get_food()
+
+            if self.carry_food is not None:
+                self._center_food()
+                show_info_feedback(GOT_FOOD)
         else:
-            self.drop_food()
+            show_neg_feedback(ALREADY_GOT_FOOD)
 
-    def pickup_food(self):
-        from sprite_cluster import get_chef_collisions
+    def handle_ticket_window_interaction(self, window):
+        if self.ticket is None:
+            self.ticket = window.get_ticket()
 
-        collisions = get_chef_collisions()
+            if self.ticket is not None:
+                show_pos_feedback(GOT_TICKET)
+                show_info_feedback("This ticket reads: {}"\
+                    .format(self.ticket.key))
+            else:
+                show_neg_feedback(GOT_NO_TICKET)
 
-        # for obj in collisions:
-        #     if obj is not None and isinstance(obj, Food) and \
-        #             obj is not self.carry_food:
-        #         self.carry_food = obj
-        #         self.__center_food__()
-        #         show_pos_feedback('Congratulations you picked up an item')
-        #         break
+    def handle_order_window_interaction(self, window):
+        if self.carry_food is not None and self.ticket is not None:
+            window.deliver_order(self.carry_food, self.ticket)
+            
+            # reset chef for next order
+            self.carry_food = None
+            self.ticket = None
+        else:
+            # TODO: remove once key events are fixed
+            # show_neg_feedback(INCOMPLETE_ORDER)
+            pass
 
-        for obj in collisions:
-            if obj is not None and isinstance(obj, Countertop) and \
-                    obj is not self.carry_food:
-                self.carry_food = obj.food
-                self.__center_food__()
-                show_pos_feedback('Congratulations you picked up \
-                    an item from the counter')
-                break
+    def handle_hasher_interaction(self, hasher):
+        if self.ticket is not None:
+            self.ticket = hasher.translate_ticket(self.ticket)
+            
+            if self.ticket is not None:
+                show_pos_feedback(GOT_TRANSLATED_TICKET + self.ticket.hash)
+        else:
+            show_neg_feedback(NEED_TICKET)
 
-    def drop_food(self):
-        from sprite_cluster import get_chef_collisions
-
-        collisions = get_chef_collisions()
-
-        for obj in collisions:
-            if obj is not None and isinstance(obj, OrderWindow):
-                self.carry_food = None
-                show_pos_feedback('Congratulations you put an item \
-                    into the order window.')
 
     def move_carry_food(self, x_offset, y_offset):
         if self.carry_food is not None:
             self.carry_food.move((x_offset, y_offset))
 
-    def __center_food__(self):
+    def _center_food(self):
         # TODO: use // instead for integer?
         self.carry_food.set_coordinates(
             self.x + (self.get_width() / 2) -

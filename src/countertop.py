@@ -25,9 +25,9 @@ class Countertop(DinerSprite):
 
     __IMAGE_FILE__ = "../imgs/countertop.png"
 
-    def __init__(self, x, y, food_type):
+    def __init__(self, x, y, food):
         super(Countertop, self).__init__(x, y)
-        self.food = Food(x, y, food_type)
+        self.food = food
 
     def on_init(self):
         self.image = image.load(self.__IMAGE_FILE__).convert_alpha()
@@ -45,5 +45,5 @@ class Countertop(DinerSprite):
     def add_food(self, food):
         self.food = Food
 
-    def return_food(self):
+    def get_food(self):
         return self.food

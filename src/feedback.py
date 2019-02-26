@@ -38,44 +38,25 @@ def __init__():
 
 
 def show_pos_feedback(string):
-    # TODO use green fill here
-    # render(text, antialias, color, background=None) -> Surface
-    text = FONT.render(string, True, BLACK, GREEN)
-    tb = TextBox(GREEN, text)
-
-    text_boxes.append(tb)
+    _show_feedback(string, BLACK, GREEN)
 
 
 def show_neg_feedback(string):
-    # TODO use red fill here
-    text = FONT.render(string, True, WHITE, RED)
-    tb = TextBox(GREEN, text)
-
-    text_boxes.append(tb)
+    _show_feedback(string, BLACK, RED)
 
 
 def show_info_feedback(string):
-    # TODO use blue outline (width=2) here
-    text = FONT.render(string, True, WHITE, BLUE)
-    tb = TextBox(GREEN, text)
-
-    text_boxes.append(tb)
-
-
-def show_order_feedback(string):
-    # TODO use blue outline (width =2) right here
-    text = FONT.render(string, True, WHITE, BLUE)
-    tb = TextBox(GREEN, text)
+    _show_feedback(string, WHITE, BLUE)
 
 
 def on_render(surface):
     # TODO dynamically place text boxes
     for text_box in text_boxes:
-        text_box.on_render(surface)
+        if not text_box.on_render(surface):
+            text_boxes.remove(text_box)
 
 
-# use this to create pos and neg feedback
-# only difference is color, so this is an
-# abstraction
-def _show_feedback(color, string):
-    pass
+def _show_feedback(string, text_color, box_color):
+    text = FONT.render(string, True, text_color, box_color)
+    tb = TextBox(box_color, text)
+    text_boxes.append(tb)
