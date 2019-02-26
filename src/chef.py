@@ -46,6 +46,7 @@ from pygame import (
     K_RIGHT,
     K_UP,
     KEYDOWN,
+    KEYUP,
 
     display,
     image,
@@ -73,20 +74,22 @@ class Chef(DinerSprite):
         self.ticket = None
 
     def on_event(self, keys):
-        if (keys[K_RIGHT]):
+        if(keys[K_RIGHT]):
             self.moveRight()
-
-        if (keys[K_LEFT]):
+        if(keys[K_LEFT]):
             self.moveLeft()
-
-        if (keys[K_UP]):
+        if(keys[K_UP]):
             self.moveUp()
-
-        if (keys[K_DOWN]):
+        if(keys[K_DOWN]):
             self.moveDown()
 
-        if (keys[K_SPACE]):
-            self.handle_interaction()
+        for e in event.get():
+            if e.type == KEYDOWN:
+                if e.key == K_SPACE:
+                    self.handle_interaction()
+            elif e.type == KEYUP:
+                if e.key == K_SPACE:
+                    pass
 
     def moveRight(self):
         self.x += self.__SPEED__
@@ -132,9 +135,8 @@ class Chef(DinerSprite):
     def handle_countertop_interaction(self, countertop):
         if self.carry_food is None:
             self.carry_food = countertop.get_food()
-
-            if self.carry_food is not None:
-                self._center_food()
+            if self.carry_food is not None: # if chef is carrying food
+                self._center_food() # have the chef carry the food
                 show_info_feedback(GOT_FOOD)
         else:
             show_neg_feedback(ALREADY_GOT_FOOD)
@@ -153,7 +155,7 @@ class Chef(DinerSprite):
     def handle_order_window_interaction(self, window):
         if self.carry_food is not None and self.ticket is not None:
             window.deliver_order(self.carry_food, self.ticket)
-            
+
             # reset chef for next order
             self.carry_food = None
             self.ticket = None
@@ -165,7 +167,6 @@ class Chef(DinerSprite):
     def handle_hasher_interaction(self, hasher):
         if self.ticket is not None:
             self.ticket = hasher.translate_ticket(self.ticket)
-            
             if self.ticket is not None:
                 show_pos_feedback(GOT_TRANSLATED_TICKET + self.ticket.hash)
         else:
@@ -175,6 +176,7 @@ class Chef(DinerSprite):
     def move_carry_food(self, x_offset, y_offset):
         if self.carry_food is not None:
             self.carry_food.move((x_offset, y_offset))
+
 
     def _center_food(self):
         # TODO: use // instead for integer?
