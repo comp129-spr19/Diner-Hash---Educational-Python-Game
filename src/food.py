@@ -3,6 +3,8 @@ from diner_sprite import (
 )
 
 from food_type import (
+    food_type_to_image,
+
     FoodType
 )
 
@@ -12,10 +14,6 @@ from pygame import (
 
 
 class Food(DinerSprite):
-    # TODO: refactor this to food_types.py
-    dict_image = {
-        FoodType.BURGER: "../imgs/burger.png"
-    }
 
     def __init__(self, x, y, f_type):
         super(Food, self).__init__(x, y)
@@ -23,7 +21,7 @@ class Food(DinerSprite):
         self.f_type = f_type
 
     def on_init(self):
-        image_path = self.dict_image.get(self.f_type)
+        image_path = food_type_to_image.get(self.f_type)
         self.image = image.load(image_path).convert_alpha()
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
 

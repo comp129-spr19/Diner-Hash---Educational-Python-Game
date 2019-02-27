@@ -15,26 +15,30 @@ from pygame import (
     quit
 )
 
+from system_utils import (
+    WINDOW_HEIGHT,
+    WINDOW_WIDTH
+)
+
+import feedback as fb
+
 import sprite_cluster as sc
 
 
 class App:
 
-    # internal constants
-    __WINDOW_WIDTH__ = 800
-    __WINDOW_HEIGHT__ = 800
-
     def __init__(self):
         self._running = True
         self._display_surf = None
 
-        # initialize sprite cluster
+        # initialize application entities
+        fb.__init__()
         sc.__init__()
 
     def on_init(self):
         init()
         self._display_surf = display.set_mode(
-            (self.__WINDOW_WIDTH__, self.__WINDOW_HEIGHT__), HWSURFACE)
+            (WINDOW_WIDTH, WINDOW_HEIGHT), HWSURFACE)
 
         # initialize class variables
         self.kitchen = Kitchen()
@@ -44,12 +48,12 @@ class App:
 
         self._running = True
 
-    def on_event(self, keys):
+    def on_event(self, keys, event):
         if keys[K_ESCAPE]:
             self._running = False
         else:
             self.kitchen.on_event(keys)
-            sc.on_event(keys)
+            sc.on_event(keys, event)
 
     def on_loop(self):
         self.kitchen.on_loop()
@@ -59,7 +63,7 @@ class App:
         # TODO: should kitchen only render once?
         self.kitchen.on_render(self._display_surf)
         sc.on_render(self._display_surf)
-
+        fb.on_render(self._display_surf)
         # update display to register all changes
         display.flip()
 
@@ -74,7 +78,7 @@ class App:
             event.pump()
             keys = key.get_pressed()
 
-            self.on_event(keys)
+            self.on_event(keys, event)
             self.on_loop()
             self.on_render()
 
