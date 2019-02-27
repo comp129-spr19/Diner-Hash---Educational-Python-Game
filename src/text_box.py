@@ -19,8 +19,8 @@ class TextBox(object):
 
     __DISPLAY_TIME__ = 10  # in seconds
 
-    text_box_width = 200
-    text_box_height = 100
+    text_box_width = 800
+    text_box_height = 200
 
     def __init__(self, rect_color, rect_text):
         self.display = True
