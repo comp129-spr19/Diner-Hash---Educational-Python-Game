@@ -13,6 +13,7 @@ from feedback_msgs.order_window_feedback_msgs import (
 )
 
 from food_type import (
+    FoodType,
     string_to_food_type
 )
 
@@ -43,7 +44,8 @@ class OrderWindow(DinerSprite):
             # TODO: provide feedback once key events are resolved
             return
 
-        if food.f_type is string_to_food_type.get(ticket.hash):
+        # if food.f_type is string_to_food_type.get(ticket.hash):
+        if food.f_type is FoodType(ticket.hash):
             # TODO: add to score here
             food.kill()
             show_pos_feedback(CORRECT_ORDER)

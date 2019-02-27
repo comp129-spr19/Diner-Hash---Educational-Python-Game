@@ -7,7 +7,7 @@ from countertop import (
 )
 
 from diner_sprite import (
-     DinerSprite
+    DinerSprite
 )
 
 from food import (
@@ -20,6 +20,10 @@ from food_type import (
 
 from hasher import (
     Hasher
+)
+
+from number import (
+    Number
 )
 
 from order_window import (
@@ -46,6 +50,7 @@ chef = None
 countertop_group = None
 food_group = None
 window_group = None
+number_group = None
 
 # Internal constants
 __CHEF_START_X__ = 400          # chef starting x coordinate
@@ -66,6 +71,10 @@ def add_food(food):
 
 def add_countertop(countertop):
     countertop_group.add([countertop])
+
+
+def add_number(number):
+    number_group.add([number])
 
 
 def add_window(window):
@@ -95,6 +104,7 @@ def on_init():
     global countertop_group
     global food_group
     global window_group
+    global number_group
 
     chef.on_init()
 
@@ -103,6 +113,9 @@ def on_init():
 
     for food in food_group:
         food.on_init()
+    
+    for number in number_group:
+        number.on_init()
 
     for window in window_group:
         window.on_init()
@@ -147,14 +160,19 @@ def on_render(surface):
     global chef
     global countertop_group
     global food_group
+    global number_group
 
     chef.on_render(surface)
+
+    # Changed order of rendering so food is hidden behind counter
+    for food in food_group:
+        food.on_render(surface)
 
     for countertop in countertop_group:
         countertop.on_render(surface)
 
-    for food in food_group:
-        food.on_render(surface)
+    for number in number_group:
+        number.on_render(surface)
 
     for window in window_group:
         window.on_render(surface)
@@ -163,6 +181,7 @@ def on_render(surface):
 def __init__():
     __init_chef__()
     __init_food_group__()
+    __init_number_group__()
     __init_countertop_group__()
     __init_window_group__()
 
@@ -188,9 +207,11 @@ def __init_countertop__():
 
     for food_type in FoodType:
         food = Food(0, 0, food_type)
-        countertop = Countertop(x, y, food)
+        number = Number(0, 0, food_type)
+        countertop = Countertop(x, y, food, number)
 
         add_food(food)
+        add_number(number)
         add_countertop(countertop)
 
         # increment x so next countertop is properly shifted
@@ -201,8 +222,11 @@ def __init_countertop_group__():
     global countertop_group
     countertop_group = Group()
 
-    # TODO: expand this beyond just one countertop
     __init_countertop__()
+
+def __init_number_group__():
+    global number_group
+    number_group = Group()
 
 
 def __init_window_group__():
@@ -214,7 +238,7 @@ def __init_window_group__():
     ticket_window = TicketWindow(__TICKET_WINDOW_X__, __TICKET_WINDOW_Y__)
 
     # TODO: remove hardcoded ticket call after demo
-    ticket = Ticket("ON THE SLIDE")
+    ticket = Ticket("Burger")
     ticket_window.add_ticket(ticket)
 
     order_window = OrderWindow(__ORDER_WINDOW_X__, __ORDER_WINDOW_Y__)

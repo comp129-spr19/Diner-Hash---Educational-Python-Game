@@ -13,8 +13,9 @@ from feedback_msgs.hasher_feedback_msgs import (
 )
 
 from food_type import (
+    FoodType,
     food_type_to_string,
-    ticket_to_food_type
+    string_to_food_type
 )
 
 from pygame import (
@@ -35,8 +36,7 @@ class Hasher(DinerSprite):
 
     def translate_ticket(self, ticket):
         if ticket.key is not None:
-            type = ticket_to_food_type.get(ticket.key)
-            ticket.set_hash(food_type_to_string.get(type))
+            ticket.set_hash(string_to_food_type.get(ticket.key).value)
             show_pos_feedback(TRANSLATED_TICKET)
             return ticket
         else:

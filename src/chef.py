@@ -168,7 +168,7 @@ class Chef(DinerSprite):
         if self.ticket is not None:
             self.ticket = hasher.translate_ticket(self.ticket)
             if self.ticket is not None:
-                show_pos_feedback(GOT_TRANSLATED_TICKET + self.ticket.hash)
+                show_pos_feedback(GOT_TRANSLATED_TICKET + str(self.ticket.hash))
         else:
             show_neg_feedback(NEED_TICKET)
 
