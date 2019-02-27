@@ -6,12 +6,14 @@ from pygame import (
     # imported constants
     HWSURFACE,
     K_ESCAPE,
+    K_SPACE,
     QUIT,
 
     display,
     event,
     init,
     key,
+    time,
     quit
 )
 
@@ -19,6 +21,8 @@ from system_utils import (
     WINDOW_HEIGHT,
     WINDOW_WIDTH
 )
+
+from threading import Timer
 
 import feedback as fb
 
@@ -40,6 +44,10 @@ class App:
         self._display_surf = display.set_mode(
             (WINDOW_WIDTH, WINDOW_HEIGHT), HWSURFACE)
 
+
+        # Show game intro
+        fb.show_game_intro()
+
         # initialize class variables
         self.kitchen = Kitchen()
         self.kitchen.on_init()
@@ -47,6 +55,16 @@ class App:
         sc.on_init()
 
         self._running = True
+
+    def init_after_timer(self):
+        # initialize class variables
+        self.kitchen = Kitchen()
+        self.kitchen.on_init()
+
+        sc.on_init()
+
+        self._running = True
+
 
     def on_event(self, keys, event):
         if keys[K_ESCAPE]:
