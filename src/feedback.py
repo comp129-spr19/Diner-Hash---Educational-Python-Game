@@ -26,7 +26,7 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 MAX_CHARS = 80
-FONT = SysFont('Arial', 12, bold=True)
+FONT = SysFont('Arial', 30, bold=True)
 
 # feedback global variables
 text_boxes = None
