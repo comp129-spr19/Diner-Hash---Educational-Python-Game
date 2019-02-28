@@ -30,14 +30,13 @@ from pygame.sprite import (
 
 class OrderWindow(DinerSprite):
 
-    __IMAGE_FILE__ = "../imgs/window.png"
-    __IMAGE_FILE__DRIVE_THRU__ = "../imgs/drivethrough.png"
+    __IMAGE_FILE__ = "../imgs/order_window.png"
+    
 
     def __init__(self, x, y):
         super(OrderWindow, self).__init__(x, y)
 
     def on_init(self):
-        self.image = image.load(self.__IMAGE_FILE__).convert_alpha()
         self.image = image.load(self.__IMAGE_FILE__).convert_alpha()
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
         
