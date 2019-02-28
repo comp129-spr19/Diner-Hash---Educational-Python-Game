@@ -20,7 +20,6 @@ from system_utils import (
     WINDOW_WIDTH
 )
 
-from threading import Timer
 
 import feedback as fb
 
@@ -43,8 +42,6 @@ class App:
             (WINDOW_WIDTH, WINDOW_HEIGHT), HWSURFACE)
 
 
-        # Show game intro
-        fb.show_game_intro()
 
         # initialize class variables
         self.kitchen = Kitchen()
