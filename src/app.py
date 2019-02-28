@@ -12,7 +12,6 @@ from pygame import (
     event,
     init,
     key,
-    time,
     quit
 )
 
