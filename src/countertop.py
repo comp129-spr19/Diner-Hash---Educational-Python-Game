@@ -25,19 +25,28 @@ class Countertop(DinerSprite):
 
     __IMAGE_FILE__ = "../imgs/countertop.png"
 
-    def __init__(self, x, y, food):
+    def __init__(self, x, y, food, number):
         super(Countertop, self).__init__(x, y)
         self.food = food
+        self.number = number
 
     def on_init(self):
         self.image = image.load(self.__IMAGE_FILE__).convert_alpha()
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
-        food_x = self.x + ((self.get_width() / 2) -
-                           (self.food.get_width() / 2))
-        food_y = self.y + ((self.get_height() / 2) -
-                           (self.food.get_height() / 2))
+
+        # Centering for food is approximate - 
+        # this is okay because it is behind the counter
+        food_x = self.x + ((self.get_width() / 2))
+        food_y = self.y + ((self.get_height() / 2))
         self.food.x = food_x
         self.food.y = food_y
+
+        # Number size is hardcoded
+        number_x = self.x + ((self.get_width() / 2) - 31)
+        number_y = self.y + ((self.get_height() / 2) - 40)
+        self.number.x = number_x
+        self.number.y = number_y
+
 
     def on_event(self, keys):
         pass

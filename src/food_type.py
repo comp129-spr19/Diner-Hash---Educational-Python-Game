@@ -4,28 +4,11 @@ from enum import (
 
 
 class FoodType(Enum):
-    BURGER = 1
-    TACO = 2
-    PIZZA = 3
-    HOTDOG = 4
+    BURGER = 0
+    TACO = 1
+    PIZZA = 2
+    HOTDOG = 3
     # TODO: add more food types
-
-
-food_type_to_ticket = {
-    FoodType.BURGER: "ON THE SLIDE",
-    FoodType.TACO: "JUST JUAN",
-    FoodType.PIZZA: "HOT PIE HOLD THE MAYO",
-    FoodType.HOTDOG: "FRANK'S FURTER"
-}
-
-
-ticket_to_food_type = {
-    "ON THE SLIDE": FoodType.BURGER,
-    "JUST JUAN": FoodType.TACO,
-    "HOT PIE HOLD THE MAYO": FoodType.PIZZA,
-    "FRANK'S FURTER": FoodType.HOTDOG
-}
-
 
 food_type_to_string = {
     FoodType.BURGER: "Burger",
@@ -33,6 +16,7 @@ food_type_to_string = {
     FoodType.PIZZA: "Pizza",
     FoodType.HOTDOG: "Hotdog"
 }
+
 
 string_to_food_type = {
     "Burger": FoodType.BURGER,
