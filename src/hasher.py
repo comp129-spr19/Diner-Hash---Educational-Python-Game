@@ -25,7 +25,7 @@ from pygame import (
 
 class Hasher(DinerSprite):
 
-    __IMAGE_FILE__ = "../imgs/hasher.png"
+    __IMAGE_FILE__ = "../imgs/hasher1.png"
 
     def __init__(self, x, y):
         super(Hasher, self).__init__(x, y)
