@@ -6,7 +6,6 @@ from pygame import (
     # imported constants
     HWSURFACE,
     K_ESCAPE,
-    K_SPACE,
     QUIT,
 
     display,
