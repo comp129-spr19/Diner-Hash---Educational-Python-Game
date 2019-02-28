@@ -34,23 +34,16 @@ class Countertop(DinerSprite):
         self.image = image.load(self.__IMAGE_FILE__).convert_alpha()
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
 
-        # TODO: possibly abstract the centering???
-
-        food_x = self.x + ((self.get_width() / 2) -
-                           (self.food.get_width() / 2))
-        food_y = self.y + ((self.get_height() / 2) -
-                           (self.food.get_height() / 2))
+        # Centering for food is approximate - 
+        # this is okay because it is behind the counter
+        food_x = self.x + ((self.get_width() / 2))
+        food_y = self.y + ((self.get_height() / 2))
         self.food.x = food_x
         self.food.y = food_y
 
-        # TODO: fix the centering.  
-        # Currently get_width() and get_height() return -1 for food and number
-        # Hardcoded values in for now
-
-        number_x = self.x + ((self.get_width() / 2) -
-                           (31))
-        number_y = self.y + ((self.get_height() / 2) -
-                           (40))
+        # Number size is hardcoded
+        number_x = self.x + ((self.get_width() / 2) - 31)
+        number_y = self.y + ((self.get_height() / 2) - 40)
         self.number.x = number_x
         self.number.y = number_y
 

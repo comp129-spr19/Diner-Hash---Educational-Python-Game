@@ -162,9 +162,8 @@ def on_render(surface):
     global food_group
     global number_group
 
-    chef.on_render(surface)
+    # Order of rendering affects the layering of sprite
 
-    # Changed order of rendering so food is hidden behind counter
     for food in food_group:
         food.on_render(surface)
 
@@ -176,6 +175,8 @@ def on_render(surface):
 
     for window in window_group:
         window.on_render(surface)
+    
+    chef.on_render(surface)
 
 
 def __init__():

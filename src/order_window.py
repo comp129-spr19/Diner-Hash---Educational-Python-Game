@@ -44,7 +44,6 @@ class OrderWindow(DinerSprite):
             # TODO: provide feedback once key events are resolved
             return
 
-        # if food.f_type is string_to_food_type.get(ticket.hash):
         if food.f_type is FoodType(ticket.hash):
             # TODO: add to score here
             food.kill()
