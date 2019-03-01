@@ -21,10 +21,6 @@ from system_utils import (
     WINDOW_WIDTH
 )
 
-from time import (
-    clock
-)
-
 # initialize font environment
 init()
 
@@ -43,7 +39,6 @@ text_boxes = None
 
 def __init__():
     global text_boxes
-    global intro_screen_checker
 
     text_boxes = []
     intro_screen_checker = []
