@@ -41,8 +41,6 @@ class App:
         self._display_surf = display.set_mode(
             (WINDOW_WIDTH, WINDOW_HEIGHT), HWSURFACE)
 
-
-
         # initialize class variables
         self.kitchen = Kitchen()
         self.kitchen.on_init()
