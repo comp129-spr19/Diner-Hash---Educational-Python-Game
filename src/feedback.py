@@ -21,9 +21,6 @@ from system_utils import (
     WINDOW_WIDTH
 )
 
-from time import (
-    clock
-)
 
 # initialize font environment
 init()
@@ -43,25 +40,9 @@ text_boxes = None
 
 def __init__():
     global text_boxes
-    global intro_screen_checker
 
     text_boxes = []
-    intro_screen_checker = []
 
-
-def show_game_intro():
-    # # gamedisplay.fill(WHITE)
-    # largeText = SysFont('Arial',155)
-    # textSurf, textRect = text_objects("Testing", largeText)
-    # textRect.centre = ((WINDOW_WIDTH/2), (WINDOW_HEIGHT/2))
-    # # gamedisplay.blit(textSurf, textRect)
-    intro_string = "Welcome"
-
-    text = FONT.render(intro_string, True, BLACK, WHITE)
-    tb = TextBox(WHITE, text)
-    text_boxes.append(tb)
-
-    # clock.tick(15)
 
 def show_pos_feedback(string):
     _show_feedback(string, BLACK, GREEN)
