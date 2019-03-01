@@ -49,7 +49,6 @@ class App:
 
         self._running = True
 
-        
     def on_event(self, keys, event):
         if keys[K_ESCAPE]:
             self._running = False
