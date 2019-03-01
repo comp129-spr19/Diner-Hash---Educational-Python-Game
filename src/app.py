@@ -1,3 +1,7 @@
+from loading_screen import (
+    LoadingScreen
+)
+
 from kitchen import (
     Kitchen
 )
@@ -20,8 +24,6 @@ from system_utils import (
     WINDOW_WIDTH
 )
 
-from threading import Timer
-
 import feedback as fb
 
 import sprite_cluster as sc
@@ -32,6 +34,8 @@ class App:
     def __init__(self):
         self._running = True
         self._display_surf = None
+        self.kitchen = Kitchen()
+        self.loading_screen = LoadingScreen()
 
         # initialize application entities
         fb.__init__()
@@ -39,30 +43,16 @@ class App:
 
     def on_init(self):
         init()
+
+        # initialize class variables
         self._display_surf = display.set_mode(
             (WINDOW_WIDTH, WINDOW_HEIGHT), HWSURFACE)
-
-
-        # Show game intro
-        fb.show_game_intro()
-
-        # initialize class variables
-        self.kitchen = Kitchen()
         self.kitchen.on_init()
-
-        sc.on_init()
-
+        self.loading_screen.on_init()
         self._running = True
 
-    def init_after_timer(self):
-        # initialize class variables
-        self.kitchen = Kitchen()
-        self.kitchen.on_init()
-
+        fb.on_init()
         sc.on_init()
-
-        self._running = True
-
 
     def on_event(self, keys, event):
         if keys[K_ESCAPE]:
@@ -89,6 +79,10 @@ class App:
     def on_execute(self):
         if self.on_init() is False:
             self._running = False
+
+        # run and unload loading screen
+        self.loading_screen.run(self._display_surf)
+        self.loading_screen = None
 
         while (self._running):
             event.pump()
