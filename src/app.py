@@ -51,16 +51,7 @@ class App:
 
         self._running = True
 
-    def init_after_timer(self):
-        # initialize class variables
-        self.kitchen = Kitchen()
-        self.kitchen.on_init()
-
-        sc.on_init()
-
-        self._running = True
-
-
+        
     def on_event(self, keys, event):
         if keys[K_ESCAPE]:
             self._running = False
