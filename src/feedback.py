@@ -41,7 +41,6 @@ def __init__():
     global text_boxes
 
     text_boxes = []
-    intro_screen_checker = []
 
 
 def on_init():
