@@ -59,15 +59,15 @@ number_group = None
 # Internal constants
 __CHEF_START_X__ = 400          # chef starting x coordinate
 __CHEF_START_Y__ = 200          # chef starting y coordinate
-__HASHER_START_X__ = 50         # hasher starting x coordinate
+__HASHER_START_X__ = 25         # hasher starting x coordinate
 __HASHER_START_Y__ = 200        # hasher starting y coordinate
 __COUNTERTOP_WIDTH__ = 100      # TODO: FIND NON-HARD-CODED SOLUTION
 __COUNTERTOP_START_X__ = 100    # countertop starting x coordinate
 __COUNTERTOP_START_Y__ = 400    # countertop starting y coordinate
-__TICKET_WINDOW_X__ = 200       # ticket window starting x coordinate
+__TICKET_WINDOW_X__ = 0       # ticket window starting x coordinate
 __TICKET_WINDOW_Y__ = 0         # ticket window starting y coordinate
 __ORDER_WINDOW_X__ = 600        # order window starting x coordinate
-__ORDER_WINDOW_Y__ = 0          # order window starting y coordinate
+__ORDER_WINDOW_Y__ = 50         # order window starting y coordinate
 
 def add_food(food):
     food_group.add([food])

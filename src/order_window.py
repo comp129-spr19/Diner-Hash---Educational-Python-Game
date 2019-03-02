@@ -34,6 +34,7 @@ from pygame.sprite import (
 class OrderWindow(DinerSprite):
 
     __IMAGE_FILE__ = "../imgs/order_window.png"
+    
 
     def __init__(self, x, y):
         super(OrderWindow, self).__init__(x, y)
@@ -41,6 +42,7 @@ class OrderWindow(DinerSprite):
     def on_init(self):
         self.image = image.load(self.__IMAGE_FILE__).convert_alpha()
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
+        
 
     def deliver_order(self, food, ticket):
         if food is None and ticket is None:
