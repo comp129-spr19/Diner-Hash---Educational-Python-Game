@@ -48,7 +48,7 @@ def __init__():
 
 def on_init():
     pass
-    
+
 
 def show_pos_feedback(string):
     _show_feedback(string, BLACK, GREEN)

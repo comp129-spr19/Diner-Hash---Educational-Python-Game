@@ -9,7 +9,6 @@ from time import (
 
 
 class LoadingScreen(object):
-    
     # class constants
     __DISPLAY_TIME__ = 1  # in seconds
     __START_X__ = 0

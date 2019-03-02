@@ -10,6 +10,7 @@ class FoodType(Enum):
     HOTDOG = 3
     # TODO: add more food types
 
+
 food_type_to_string = {
     FoodType.BURGER: "Burger",
     FoodType.TACO: "Taco",

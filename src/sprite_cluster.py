@@ -69,6 +69,7 @@ __TICKET_WINDOW_Y__ = 0         # ticket window starting y coordinate
 __ORDER_WINDOW_X__ = 600        # order window starting x coordinate
 __ORDER_WINDOW_Y__ = 50         # order window starting y coordinate
 
+
 def add_food(food):
     food_group.add([food])
 
@@ -117,7 +118,7 @@ def on_init():
 
     for food in food_group:
         food.on_init()
-    
+
     for number in number_group:
         number.on_init()
 
@@ -223,14 +224,15 @@ def __init_countertop__():
         add_countertop(countertop)
 
         # increment x so next countertop is properly shifted
-        x = x + __COUNTERTOP_WIDTH__ + 50 # added some distance between counter
+        # added some distance between countertops
+        x = x + __COUNTERTOP_WIDTH__ + 50
 
 
 def __init_countertop_group__():
     global countertop_group
     countertop_group = Group()
-
     __init_countertop__()
+
 
 def __init_number_group__():
     global number_group
@@ -248,7 +250,7 @@ def __init_window_group__():
 
     # TODO: remove hardcoded ticket call after demo
 
-    # For loop will handle random ticket generation 
+    # For loop will handle random ticket generation
     for tickets in range(0, 15):
         random_number = randint(0, 3)
         ticket_window.add_ticket(Ticket(ticket_foods[random_number]))

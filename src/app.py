@@ -86,7 +86,7 @@ class App:
         self.loading_screen = None
         # Displays intro message
         fb.show_info_feedback("Welcome! Go to the ticket window (top left)." +
-                "  The ticket is like a request for a value in a hash table")
+                              "  The ticket is like request in a hash table")
 
         while (self._running):
             event.pump()
