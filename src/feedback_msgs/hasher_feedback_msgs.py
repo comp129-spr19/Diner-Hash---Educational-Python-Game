@@ -1,2 +1,2 @@
-TRANSLATED_TICKET = "Here's your hashed key!"
+TRANSLATED_TICKET = "The ticket key translates to the value: "
 NO_TICKET = "No ticket provided to translate."

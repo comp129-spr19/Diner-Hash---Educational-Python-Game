@@ -33,7 +33,8 @@ WHITE = (255, 255, 255)
 YELLOW = (255, 255, 0)
 
 MAX_CHARS = 80
-FONT = SysFont('Arial', 30, bold=True)
+# TODO: Increase font size after implementing multi-line feedback
+FONT = SysFont('Arial', 20, bold=True)
 
 # feedback global variables
 text_boxes = None

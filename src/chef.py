@@ -148,8 +148,8 @@ class Chef(DinerSprite):
 
             if self.ticket is not None:
                 show_pos_feedback(GOT_TICKET)
-                show_info_feedback("This ticket reads: {}"\
-                    .format(self.ticket.key))
+                show_info_feedback("This ticket key reads: " + self.ticket.key +
+                    ".  Take it to the hasher to find its value!")
                 
             else:
                 show_neg_feedback(GOT_NO_TICKET)

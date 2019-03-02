@@ -12,7 +12,8 @@ from feedback_msgs.order_window_feedback_msgs import (
     CORRECT_ORDER,
     PICK_UP_FOOD_AND_TICKET,
     PICK_UP_FOOD,
-    PICK_UP_TICKET
+    PICK_UP_TICKET,
+    NO_HASH
 )
 
 from food_type import (
@@ -61,14 +62,19 @@ class OrderWindow(DinerSprite):
             # Tell them they need to pick up a ticket before the food
             show_neg_feedback(PICK_UP_TICKET)
 
-        elif food.f_type is FoodType(ticket.hash):
-            # TODO: add to score here
-            food.kill()
-            show_pos_feedback(CORRECT_ORDER)
-
-        else:
-            # TODO: remove once key events are resolved
-            show_neg_feedback(INCORRECT_ORDER)
-            if food is not None:
+        elif food is not None and ticket is not None:
+            if ticket.hash is None:
                 food.kill()
-            ticket = None
+                show_neg_feedback(NO_HASH)
+
+            elif food.f_type == FoodType(ticket.hash):
+                # TODO: add to score here
+                food.kill()
+                show_pos_feedback(CORRECT_ORDER)
+
+            else:
+                # TODO: remove once key events are resolved
+                show_neg_feedback(INCORRECT_ORDER)
+                if food is not None:
+                    food.kill()
+                ticket = None
