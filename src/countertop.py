@@ -55,4 +55,7 @@ class Countertop(DinerSprite):
         self.food = Food
 
     def get_food(self):
-        return self.food.pop()
+        if self.food is not None and len(self.food) > 0:
+            return self.food.pop()
+        else:
+            return None

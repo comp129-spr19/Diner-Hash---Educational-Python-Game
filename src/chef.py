@@ -19,6 +19,7 @@ from feedback_msgs.chef_feedback_msgs import (
     GOT_NO_TICKET,
     GOT_TRANSLATED_TICKET,
     NEED_TICKET,
+    NO_MORE_FOOD
 )
 
 from food import (
@@ -139,6 +140,8 @@ class Chef(DinerSprite):
                 # have the chef carry the food
                 self._center_food()
                 show_info_feedback(GOT_FOOD)
+            else:
+                show_neg_feedback(NO_MORE_FOOD)
         else:
             show_neg_feedback(ALREADY_GOT_FOOD)
 
