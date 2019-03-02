@@ -14,12 +14,12 @@ from feedback import (
 
 from feedback_msgs.chef_feedback_msgs import (
     ALREADY_GOT_FOOD,
+    ALREADY_GOT_TICKET,
     GOT_FOOD,
-    GOT_TICKET,
     GOT_NO_TICKET,
     GOT_TRANSLATED_TICKET,
-    INCOMPLETE_ORDER,
-    NEED_TICKET
+    NEED_TICKET,
+    NO_MORE_FOOD
 )
 
 from food import (
@@ -135,9 +135,13 @@ class Chef(DinerSprite):
     def handle_countertop_interaction(self, countertop):
         if self.carry_food is None:
             self.carry_food = countertop.get_food()
-            if self.carry_food is not None: # if chef is carrying food
-                self._center_food() # have the chef carry the food
+            if self.carry_food is not None:
+                # if chef is carrying food
+                # have the chef carry the food
+                self._center_food()
                 show_info_feedback(GOT_FOOD)
+            else:
+                show_neg_feedback(NO_MORE_FOOD)
         else:
             show_neg_feedback(ALREADY_GOT_FOOD)
 
@@ -146,37 +150,35 @@ class Chef(DinerSprite):
             self.ticket = window.get_ticket()
 
             if self.ticket is not None:
-                show_pos_feedback(GOT_TICKET)
-                show_info_feedback("This ticket reads: {}"\
-                    .format(self.ticket.key))
+                show_info_feedback("This ticket key reads: " +
+                                   self.ticket.key + ".  Take it to the " +
+                                   "hasher to find the value!")
+
             else:
                 show_neg_feedback(GOT_NO_TICKET)
+        else:
+            # Chef already has a ticket
+            show_neg_feedback(ALREADY_GOT_TICKET)
 
     def handle_order_window_interaction(self, window):
-        if self.carry_food is not None and self.ticket is not None:
-            window.deliver_order(self.carry_food, self.ticket)
+        window.deliver_order(self.carry_food, self.ticket)
 
-            # reset chef for next order
-            self.carry_food = None
-            self.ticket = None
-        else:
-            # TODO: remove once key events are fixed
-            # show_neg_feedback(INCOMPLETE_ORDER)
-            pass
+        # reset chef for next order
+        self.carry_food = None
+        self.ticket = None
 
     def handle_hasher_interaction(self, hasher):
         if self.ticket is not None:
             self.ticket = hasher.translate_ticket(self.ticket)
             if self.ticket is not None:
-                show_pos_feedback(GOT_TRANSLATED_TICKET + str(self.ticket.hash))
+                show_pos_feedback(GOT_TRANSLATED_TICKET +
+                                  str(self.ticket.hash))
         else:
             show_neg_feedback(NEED_TICKET)
-
 
     def move_carry_food(self, x_offset, y_offset):
         if self.carry_food is not None:
             self.carry_food.move((x_offset, y_offset))
-
 
     def _center_food(self):
         # TODO: use // instead for integer?

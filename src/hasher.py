@@ -42,4 +42,3 @@ class Hasher(DinerSprite):
         else:
             show_neg_feedback(NO_TICKET)
             return None
-        

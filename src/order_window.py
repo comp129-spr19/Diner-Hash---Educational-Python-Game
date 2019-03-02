@@ -9,7 +9,11 @@ from feedback import (
 
 from feedback_msgs.order_window_feedback_msgs import (
     INCORRECT_ORDER,
-    CORRECT_ORDER
+    CORRECT_ORDER,
+    PICK_UP_FOOD_AND_TICKET,
+    PICK_UP_FOOD,
+    PICK_UP_TICKET,
+    NO_HASH
 )
 
 from food_type import (
@@ -40,16 +44,33 @@ class OrderWindow(DinerSprite):
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
 
     def deliver_order(self, food, ticket):
-        if food is None or ticket is None:
-            # TODO: provide feedback once key events are resolved
-            return
+        if food is None and ticket is None:
+            # No food or ticket
+            show_neg_feedback(PICK_UP_FOOD_AND_TICKET)
 
-        if food.f_type is FoodType(ticket.hash):
-            # TODO: add to score here
+        elif food is None and ticket is not None:
+            # No food, but have a ticket
+            show_neg_feedback(PICK_UP_FOOD)
+
+        elif food is not None and ticket is None:
+            # Food but no ticket
             food.kill()
-            show_pos_feedback(CORRECT_ORDER)
-        else:
-            # TODO: remove once key events are resolved
-            show_neg_feedback(INCORRECT_ORDER)
-            if food is not None:
-                food.kill()
+            show_neg_feedback(PICK_UP_TICKET)
+
+        elif food is not None and ticket is not None:
+            # Have food and ticket
+            if ticket.hash is None:
+                # No ticket hash (they didn't take ticket to hasher)
+                show_neg_feedback(NO_HASH)
+
+            elif food.f_type == FoodType(ticket.hash):
+                # Correct order - food and ticket match
+                # TODO: add to score here
+                show_pos_feedback(CORRECT_ORDER)
+
+            else:
+                show_neg_feedback(INCORRECT_ORDER)
+
+            food.kill()
+
+        ticket = None

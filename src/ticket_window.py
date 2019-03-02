@@ -15,7 +15,7 @@ from pygame import (
 
 class TicketWindow(DinerSprite):
 
-    __IMAGE_FILE__ = "../imgs/ticket_booth.png"
+    __IMAGE_FILE__ = "../imgs/ticket_window.png"
 
     def __init__(self, x, y):
         super(TicketWindow, self).__init__(x, y)
