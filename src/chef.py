@@ -72,10 +72,6 @@ class Chef(DinerSprite):
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
         self.carry_food = None
         self.ticket = None
-
-        # Displays intro message
-        show_info_feedback("Welcome! Start by going to the ticket window (top left).\
-                You are making a get request in the hash table")
         
 
     def on_event(self, keys):

@@ -84,6 +84,9 @@ class App:
         # run and unload loading screen
         self.loading_screen.run(self._display_surf)
         self.loading_screen = None
+        # Displays intro message
+        fb.show_info_feedback("Welcome! Start by going to the ticket window (top left).\
+                You are making a get request in the hash table")
 
         while (self._running):
             event.pump()
