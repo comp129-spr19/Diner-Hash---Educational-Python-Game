@@ -67,7 +67,7 @@ __COUNTERTOP_START_Y__ = 400    # countertop starting y coordinate
 __TICKET_WINDOW_X__ = 0       # ticket window starting x coordinate
 __TICKET_WINDOW_Y__ = 0         # ticket window starting y coordinate
 __ORDER_WINDOW_X__ = 600        # order window starting x coordinate
-__ORDER_WINDOW_Y__ = 50         # order window starting y coordinate
+__ORDER_WINDOW_Y__ = 0         # order window starting y coordinate
 
 
 def add_food(food):
