@@ -9,9 +9,10 @@ from time import (
 
 
 class LoadingScreen(object):
-
+    
     # class constants
-    __DISPLAY_TIME__ = 5  # in seconds
+    # TODO: Change to 10 seconds when we are finished
+    __DISPLAY_TIME__ = 1  # in seconds
     __START_X__ = 0
     __START_Y__ = 0
     LOAD_PATH = '../imgs/loading_screens/'

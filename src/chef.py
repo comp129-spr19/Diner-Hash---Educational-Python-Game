@@ -73,6 +73,11 @@ class Chef(DinerSprite):
         self.carry_food = None
         self.ticket = None
 
+        # Displays intro message
+        show_info_feedback("Welcome! Start by going to the ticket window (top left).\
+                You are making a get request in the hash table")
+        
+
     def on_event(self, keys):
         if(keys[K_RIGHT]):
             self.moveRight()
@@ -149,20 +154,16 @@ class Chef(DinerSprite):
                 show_pos_feedback(GOT_TICKET)
                 show_info_feedback("This ticket reads: {}"\
                     .format(self.ticket.key))
+                
             else:
                 show_neg_feedback(GOT_NO_TICKET)
 
     def handle_order_window_interaction(self, window):
-        if self.carry_food is not None and self.ticket is not None:
-            window.deliver_order(self.carry_food, self.ticket)
+        window.deliver_order(self.carry_food, self.ticket)
 
-            # reset chef for next order
-            self.carry_food = None
-            self.ticket = None
-        else:
-            # TODO: remove once key events are fixed
-            # show_neg_feedback(INCOMPLETE_ORDER)
-            pass
+        # reset chef for next order
+        self.carry_food = None
+        self.ticket = None
 
     def handle_hasher_interaction(self, hasher):
         if self.ticket is not None:

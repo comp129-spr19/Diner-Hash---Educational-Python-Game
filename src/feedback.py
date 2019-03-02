@@ -30,6 +30,8 @@ BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
+YELLOW = (255, 255, 0)
+
 MAX_CHARS = 80
 FONT = SysFont('Arial', 30, bold=True)
 
@@ -56,7 +58,7 @@ def show_neg_feedback(string):
 
 
 def show_info_feedback(string):
-    _show_feedback(string, WHITE, BLUE)
+    _show_feedback(string, BLACK, YELLOW)
 
 
 def _show_feedback(string, text_color, box_color):

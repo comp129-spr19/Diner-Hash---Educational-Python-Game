@@ -22,6 +22,10 @@ from hasher import (
     Hasher
 )
 
+from random import (
+    randint
+)
+
 from number import (
     Number
 )
@@ -164,6 +168,11 @@ def on_render(surface):
 
     # Order of rendering affects the layering of sprite
 
+    for window in window_group:
+        window.on_render(surface)
+
+    chef.on_render(surface)
+
     for food in food_group:
         food.on_render(surface)
 
@@ -172,11 +181,6 @@ def on_render(surface):
 
     for number in number_group:
         number.on_render(surface)
-
-    for window in window_group:
-        window.on_render(surface)
-    
-    chef.on_render(surface)
 
 
 def __init__():
@@ -207,11 +211,14 @@ def __init_countertop__():
     y = __COUNTERTOP_START_Y__
 
     for food_type in FoodType:
-        food = Food(0, 0, food_type)
+        food = []
+        for food_count in range(0, 15):
+            food.append(Food(0, 0, food_type))
         number = Number(0, 0, food_type)
         countertop = Countertop(x, y, food, number)
 
-        add_food(food)
+        for f in food:
+            add_food(food)
         add_number(number)
         add_countertop(countertop)
 
@@ -235,12 +242,16 @@ def __init_window_group__():
     global __TICKET_WINDOW_X__
     global __TICKET_WINDOW_Y__
     window_group = Group()
+    ticket_foods = ['Burger', 'Taco', 'Pizza', 'Hotdog']
 
     ticket_window = TicketWindow(__TICKET_WINDOW_X__, __TICKET_WINDOW_Y__)
 
     # TODO: remove hardcoded ticket call after demo
-    ticket = Ticket("Burger")
-    ticket_window.add_ticket(ticket)
+
+    # For loop will handle random ticket generation 
+    for tickets in range(0, 15):
+        random_number = randint(0, 3)
+        ticket_window.add_ticket(Ticket(ticket_foods[random_number]))
 
     order_window = OrderWindow(__ORDER_WINDOW_X__, __ORDER_WINDOW_Y__)
 

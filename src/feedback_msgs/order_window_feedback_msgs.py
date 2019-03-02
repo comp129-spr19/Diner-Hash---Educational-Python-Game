@@ -1,2 +1,5 @@
 CORRECT_ORDER = "You have successfully completed an order!"
 INCORRECT_ORDER = "Order incorrect. Ticket and food do not match."
+PICK_UP_FOOD_AND_TICKET = "Pick up a ticket from the ticket window and food from the countertop"
+PICK_UP_FOOD = "Pick up food from the countertop first"
+PICK_UP_TICKET = "Pick up a ticket from the ticket window before you pick up the food from the counterop"
