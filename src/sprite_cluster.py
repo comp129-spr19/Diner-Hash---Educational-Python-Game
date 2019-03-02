@@ -53,6 +53,7 @@ from ticket_window import (
 chef = None
 countertop_group = None
 food_group = None
+hasher_group = None
 window_group = None
 number_group = None
 
@@ -62,7 +63,7 @@ __CHEF_START_Y__ = 200          # chef starting y coordinate
 __HASHER_START_X__ = 25         # hasher starting x coordinate
 __HASHER_START_Y__ = 200        # hasher starting y coordinate
 __COUNTERTOP_WIDTH__ = 100      # TODO: FIND NON-HARD-CODED SOLUTION
-__COUNTERTOP_START_X__ = 100    # countertop starting x coordinate
+__COUNTERTOP_START_X__ = 200    # countertop starting x coordinate
 __COUNTERTOP_START_Y__ = 400    # countertop starting y coordinate
 __TICKET_WINDOW_X__ = 0       # ticket window starting x coordinate
 __TICKET_WINDOW_Y__ = 0         # ticket window starting y coordinate
@@ -78,6 +79,10 @@ def add_countertop(countertop):
     countertop_group.add([countertop])
 
 
+def add_hasher(hasher):
+    hasher_group.add([hasher])
+
+
 def add_number(number):
     number_group.add([number])
 
@@ -87,8 +92,9 @@ def add_window(window):
 
 
 def get_chef_collisions():
-    global food_group
     global countertop_group
+    global food_group
+    global hasher_group
     global window_group
 
     collision_items = []
@@ -96,6 +102,10 @@ def get_chef_collisions():
     countertop_collisions = spritecollide(chef, countertop_group, False)
     if countertop_collisions is not None:
         collision_items += countertop_collisions
+
+    hasher_collisions = spritecollide(chef, hasher_group, False)
+    if hasher_collisions is not None:
+        collision_items += hasher_collisions
 
     window_collisions = spritecollide(chef, window_group, False)
     if window_collisions is not None:
@@ -108,6 +118,7 @@ def on_init():
     global chef
     global countertop_group
     global food_group
+    global hasher_group
     global window_group
     global number_group
 
@@ -115,6 +126,9 @@ def on_init():
 
     for countertop in countertop_group:
         countertop.on_init()
+
+    for hasher in hasher_group:
+        hasher.on_init()
 
     for food in food_group:
         food.on_init()
@@ -129,12 +143,16 @@ def on_init():
 def on_event(keys, event):
     global chef
     global countertop_group
+    global hasher_group
     global food_group
 
     chef.on_event(keys)
 
     for countertop in countertop_group:
         countertop.on_event(keys)
+
+    for hasher in hasher_group:
+        hasher.on_loop()
 
     for food in food_group:
         food.on_event(keys)
@@ -146,6 +164,7 @@ def on_event(keys, event):
 def on_loop():
     global chef
     global countertop_group
+    global hasher_group
     global food_group
     global window_group
 
@@ -153,6 +172,9 @@ def on_loop():
 
     for countertop in countertop_group:
         countertop.on_loop()
+
+    for hasher in hasher_group:
+        hasher.on_loop()
 
     for food in food_group:
         food.on_loop()
@@ -165,6 +187,7 @@ def on_render(surface):
     global chef
     global countertop_group
     global food_group
+    global hasher_group
     global number_group
 
     # Order of rendering affects the layering of sprite
@@ -180,6 +203,9 @@ def on_render(surface):
     for countertop in countertop_group:
         countertop.on_render(surface)
 
+    for hasher in hasher_group:
+        hasher.on_render(surface)
+
     for number in number_group:
         number.on_render(surface)
 
@@ -187,6 +213,7 @@ def on_render(surface):
 def __init__():
     __init_chef__()
     __init_food_group__()
+    __init_hasher_group__()
     __init_number_group__()
     __init_countertop_group__()
     __init_window_group__()
@@ -199,6 +226,11 @@ def __init_chef__():
 
     chef = Chef(__CHEF_START_X__, __CHEF_START_Y__)
 
+def __init_hasher__():
+    global __HASHER_START_X__
+    global __HASHER_START_Y__
+    hasher = Hasher(__HASHER_START_X__, __HASHER_START_Y__)
+    add_hasher(hasher)
 
 def __init_food_group__():
     global food_group
@@ -234,6 +266,12 @@ def __init_countertop_group__():
     __init_countertop__()
 
 
+def __init_hasher_group__():
+    global hasher_group
+    hasher_group = Group()
+    __init_hasher__()
+
+
 def __init_number_group__():
     global number_group
     number_group = Group()
@@ -257,8 +295,5 @@ def __init_window_group__():
 
     order_window = OrderWindow(__ORDER_WINDOW_X__, __ORDER_WINDOW_Y__)
 
-    hasher = Hasher(__HASHER_START_X__, __HASHER_START_Y__)
-
     add_window(ticket_window)
     add_window(order_window)
-    add_window(hasher)
