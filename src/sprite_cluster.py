@@ -61,6 +61,7 @@ __CHEF_START_X__ = 400          # chef starting x coordinate
 __CHEF_START_Y__ = 200          # chef starting y coordinate
 __HASHER_START_X__ = 25         # hasher starting x coordinate
 __HASHER_START_Y__ = 200        # hasher starting y coordinate
+__COUNTERTOP_BUFFER__ = 50      # countertop buffer for separation
 __COUNTERTOP_WIDTH__ = 100      # TODO: FIND NON-HARD-CODED SOLUTION
 __COUNTERTOP_START_X__ = 100    # countertop starting x coordinate
 __COUNTERTOP_START_Y__ = 400    # countertop starting y coordinate
@@ -224,8 +225,7 @@ def __init_countertop__():
         add_countertop(countertop)
 
         # increment x so next countertop is properly shifted
-        # added some distance between countertops
-        x = x + __COUNTERTOP_WIDTH__ + 50
+        x = x + __COUNTERTOP_WIDTH__ + __COUNTERTOP_BUFFER__
 
 
 def __init_countertop_group__():
