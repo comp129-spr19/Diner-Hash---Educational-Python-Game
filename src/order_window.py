@@ -43,8 +43,8 @@ class OrderWindow(DinerSprite):
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
 
     def deliver_order(self, food, ticket):
-        if food is None or ticket is None:
-            # No food or ticket
+        if food is None and ticket is None:
+            # No food and no ticket
             show_neg_feedback(PICK_UP_FOOD_AND_TICKET)
 
         elif food is None and ticket is not None:
@@ -53,7 +53,7 @@ class OrderWindow(DinerSprite):
             show_neg_feedback(PICK_UP_FOOD)
 
         elif food is not None and ticket is None:
-            # Food but no ticket
+            # Have food but not a ticket
             food.kill()
             show_neg_feedback(PICK_UP_TICKET)
 
