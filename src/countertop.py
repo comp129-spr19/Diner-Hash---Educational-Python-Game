@@ -51,9 +51,6 @@ class Countertop(DinerSprite):
     def on_event(self, keys):
         pass
 
-    def add_food(self, food):
-        self.food = Food
-
     def get_food(self):
         if self.food is not None and len(self.food) > 0:
             return self.food.pop()
