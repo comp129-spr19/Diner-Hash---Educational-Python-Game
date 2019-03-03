@@ -34,6 +34,10 @@ from order_window import (
     OrderWindow
 )
 
+from ticket import (
+    Ticket
+)
+
 from ticket_window import (
     TicketWindow
 )
@@ -63,6 +67,8 @@ class Chef(DinerSprite):
 
     __IMAGE_FILE__ = "../imgs/chef.png"
     __SPEED__ = 4
+    __CARRY_OFFSET_X__ = 35
+    __CARRY_OFFSET_Y__ = 25
 
     def __init__(self, x, y):
         super(Chef, self).__init__(x, y)
@@ -71,7 +77,7 @@ class Chef(DinerSprite):
         self.image = image.load(self.__IMAGE_FILE__).convert_alpha()
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
         self.carry_food = None
-        self.ticket = None
+        self.carry_ticket = None
 
     def on_event(self, keys):
         if(keys[K_RIGHT]):
@@ -95,25 +101,25 @@ class Chef(DinerSprite):
         self.x += self.__SPEED__
         self.rect = self.rect.move(self.__SPEED__, 0)
 
-        self.move_carry_food(self.__SPEED__, 0)
+        self.move_carry_items(self.__SPEED__, 0)
 
     def moveLeft(self):
         self.x -= self.__SPEED__
         self.rect = self.rect.move(-self.__SPEED__, 0)
 
-        self.move_carry_food(-self.__SPEED__, 0)
+        self.move_carry_items(-self.__SPEED__, 0)
 
     def moveUp(self):
         self.y -= self.__SPEED__
         self.rect = self.rect.move(0, -self.__SPEED__)
 
-        self.move_carry_food(0, -self.__SPEED__)
+        self.move_carry_items(0, -self.__SPEED__)
 
     def moveDown(self):
         self.y += self.__SPEED__
         self.rect = self.rect.move(0, self.__SPEED__)
 
-        self.move_carry_food(0, self.__SPEED__)
+        self.move_carry_items(0, self.__SPEED__)
 
     def handle_interaction(self):
         from sprite_cluster import get_chef_collisions
@@ -146,12 +152,13 @@ class Chef(DinerSprite):
             show_neg_feedback(ALREADY_GOT_FOOD)
 
     def handle_ticket_window_interaction(self, window):
-        if self.ticket is None:
-            self.ticket = window.get_ticket()
+        if self.carry_ticket is None:
+            self.carry_ticket = window.get_ticket()
 
-            if self.ticket is not None:
+            if self.carry_ticket is not None:
+                self._center_ticket()
                 show_info_feedback("This ticket key reads: " +
-                                   self.ticket.key + ".  Take it to the " +
+                                   self.carry_ticket.key + ".  Take it to the " +
                                    "hasher to find the value!")
 
             else:
@@ -161,29 +168,44 @@ class Chef(DinerSprite):
             show_neg_feedback(ALREADY_GOT_TICKET)
 
     def handle_order_window_interaction(self, window):
-        window.deliver_order(self.carry_food, self.ticket)
+        window.deliver_order(self.carry_food, self.carry_ticket)
 
         # reset chef for next order
         self.carry_food = None
-        self.ticket = None
+        self.carry_ticket = None
 
     def handle_hasher_interaction(self, hasher):
-        if self.ticket is not None:
-            self.ticket = hasher.translate_ticket(self.ticket)
-            if self.ticket is not None:
+        if self.carry_ticket is not None:
+            self.carry_ticket = hasher.translate_ticket(self.carry_ticket)
+            if self.carry_ticket is not None:
                 show_pos_feedback(GOT_TRANSLATED_TICKET +
-                                  str(self.ticket.hash))
+                                  str(self.carry_ticket.hash))
         else:
             show_neg_feedback(NEED_TICKET)
+
+    def move_carry_items(self, x_offset, y_offset):
+        self.move_carry_food(x_offset, y_offset)
+        self.move_carry_ticket(x_offset, y_offset)
 
     def move_carry_food(self, x_offset, y_offset):
         if self.carry_food is not None:
             self.carry_food.move((x_offset, y_offset))
 
+    def move_carry_ticket(self, x_offset, y_offset):
+        if self.carry_ticket is not None:
+            self.carry_ticket.move((x_offset, y_offset))
+
     def _center_food(self):
         # TODO: use // instead for integer?
         self.carry_food.set_coordinates(
             self.x + (self.get_width() / 2) -
-            (self.carry_food.get_width() / 2),
+            (self.carry_food.get_width() / 2) - self.__CARRY_OFFSET_X__,
             self.y + (self.get_height() / 2) -
-            (self.carry_food.get_height() / 2))
+            (self.carry_food.get_height() / 2) + self.__CARRY_OFFSET_Y__)
+
+    def _center_ticket(self):
+        self.carry_ticket.set_coordinates(
+            self.x + (self.get_width() / 2) -
+            (self.carry_ticket.get_width() / 2) + self.__CARRY_OFFSET_X__,
+            self.y + (self.get_height() / 2) -
+            (self.carry_ticket.get_height() / 2) + self.__CARRY_OFFSET_Y__)

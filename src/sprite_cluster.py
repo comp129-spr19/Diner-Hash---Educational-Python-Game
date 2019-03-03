@@ -56,6 +56,7 @@ food_group = None
 hasher_group = None
 window_group = None
 number_group = None
+ticket_group = None
 
 # Internal constants
 __CHEF_START_X__ = 400          # chef starting x coordinate
@@ -66,6 +67,8 @@ __COUNTERTOP_BUFFER__ = 50      # countertop buffer for separation
 __COUNTERTOP_WIDTH__ = 100      # TODO: FIND NON-HARD-CODED SOLUTION
 __COUNTERTOP_START_X__ = 200    # countertop starting x coordinate
 __COUNTERTOP_START_Y__ = 400    # countertop starting y coordinate
+__TICKET_START_X__ = -600       # ticket starting x coordinate
+__TICKET_START_Y__ = -600        # ticket starting y coordinate
 __TICKET_WINDOW_X__ = 0       # ticket window starting x coordinate
 __TICKET_WINDOW_Y__ = 0         # ticket window starting y coordinate
 __ORDER_WINDOW_X__ = 600        # order window starting x coordinate
@@ -86,6 +89,10 @@ def add_hasher(hasher):
 
 def add_number(number):
     number_group.add([number])
+
+
+def add_ticket(ticket):
+    ticket_group.add([ticket])
 
 
 def add_window(window):
@@ -137,6 +144,9 @@ def on_init():
     for number in number_group:
         number.on_init()
 
+    for ticket in ticket_group:
+        ticket.on_init()
+
     for window in window_group:
         window.on_init()
 
@@ -157,6 +167,9 @@ def on_event(keys, event):
 
     for food in food_group:
         food.on_event(keys)
+
+    for ticket in ticket_group:
+        ticket.on_event(keys)
 
     for window in window_group:
         window.on_event(keys)
@@ -180,6 +193,9 @@ def on_loop():
     for food in food_group:
         food.on_loop()
 
+    for ticket in ticket_group:
+        ticket.on_loop()
+
     for window in window_group:
         window.on_loop()
 
@@ -201,6 +217,9 @@ def on_render(surface):
     for food in food_group:
         food.on_render(surface)
 
+    for ticket in ticket_group:
+        ticket.on_render(surface)
+
     for countertop in countertop_group:
         countertop.on_render(surface)
 
@@ -217,6 +236,7 @@ def __init__():
     __init_hasher_group__()
     __init_number_group__()
     __init_countertop_group__()
+    __init_ticket_group__()
     __init_window_group__()
 
 
@@ -276,6 +296,12 @@ def __init_number_group__():
     global number_group
     number_group = Group()
 
+def __init_ticket_group__():
+    global ticket_group
+    global __TICKET_START_X__
+    global __TICKET_START_Y__
+    ticket_group = Group()
+
 
 def __init_window_group__():
     global window_group
@@ -291,7 +317,9 @@ def __init_window_group__():
     # For loop will handle random ticket generation
     for tickets in range(0, 15):
         random_number = randint(0, 3)
-        ticket_window.add_ticket(Ticket(ticket_foods[random_number]))
+        ticket = Ticket(ticket_foods[random_number], __TICKET_START_X__, __TICKET_START_Y__)
+        ticket_window.add_ticket(ticket)
+        add_ticket(ticket)
 
     order_window = OrderWindow(__ORDER_WINDOW_X__, __ORDER_WINDOW_Y__)
 

@@ -23,8 +23,7 @@ from food_type import (
 
 from pygame import (
     display,
-    image,
-    key
+    image
 )
 
 from pygame.sprite import (
@@ -45,15 +44,16 @@ class OrderWindow(DinerSprite):
 
     def deliver_order(self, food, ticket):
         if food is None and ticket is None:
-            # No food or ticket
+            # No food and no ticket
             show_neg_feedback(PICK_UP_FOOD_AND_TICKET)
 
         elif food is None and ticket is not None:
             # No food, but have a ticket
+            ticket.kill()
             show_neg_feedback(PICK_UP_FOOD)
 
         elif food is not None and ticket is None:
-            # Food but no ticket
+            # Have food but not a ticket
             food.kill()
             show_neg_feedback(PICK_UP_TICKET)
 
@@ -72,5 +72,4 @@ class OrderWindow(DinerSprite):
                 show_neg_feedback(INCORRECT_ORDER)
 
             food.kill()
-
-        ticket = None
+            ticket.kill()
