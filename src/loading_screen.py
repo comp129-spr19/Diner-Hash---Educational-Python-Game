@@ -15,7 +15,7 @@ class LoadingScreen(object):
     __START_Y__ = 0
     LOAD_PATH = '../imgs/loading_screens/'
     files = ['navigation.jpg', 'get_requests.jpg', 'hash_index.jpg',
-             'access_index.jpg', 'return_value.jpg']
+             'access_index.jpg', 'return_value.jpg', 'exit_instructions.jpg']
 
     def __init__(self):
         super(LoadingScreen, self).__init__()
