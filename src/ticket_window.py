@@ -12,6 +12,8 @@ from pygame import (
     key
 )
 
+import system_utils as su
+
 
 class TicketWindow(DinerSprite):
 
@@ -32,4 +34,6 @@ class TicketWindow(DinerSprite):
         if self.tickets is not None and len(self.tickets) > 0:
             return self.tickets.pop()
         else:
+            # all orders have been handled, mark end condition
+            su.game_state = su.GameState.WON
             return None
