@@ -1,3 +1,7 @@
+from feedback_msgs.app_feedback_msgs import (
+    WELCOME
+)
+
 from loading_screen import (
     LoadingScreen
 )
@@ -14,16 +18,17 @@ from pygame import (
 
     display,
     event,
+    image,
     init,
     key,
     quit
 )
 
-from system_utils import (
-    WINDOW_HEIGHT,
-    WINDOW_WIDTH
+from time import (
+    sleep
 )
 
+import system_utils as su
 
 import feedback as fb
 
@@ -31,6 +36,11 @@ import sprite_cluster as sc
 
 
 class App:
+
+    won_img = "../imgs/game_won.jpg"
+    __DISPLAY_TIME__ = 5
+    TOP_LEFT_X = 0
+    TOP_LEFT_Y = 0
 
     def __init__(self):
         self._running = True
@@ -47,7 +57,7 @@ class App:
 
         # initialize class variables
         self._display_surf = display.set_mode(
-            (WINDOW_WIDTH, WINDOW_HEIGHT), HWSURFACE)
+            (su.WINDOW_WIDTH, su.WINDOW_HEIGHT), HWSURFACE)
         self.kitchen.on_init()
         self.loading_screen.on_init()
         self._running = True
@@ -74,26 +84,41 @@ class App:
         # update display to register all changes
         display.flip()
 
+    def game_won(self):
+        win_screen = image.load(self.won_img)
+        self._switch_to_screen(win_screen, self._display_surf)
+        sleep(self.__DISPLAY_TIME__)
+
+    def _switch_to_screen(self, screen, surface):
+        surface.blit(screen, (self.TOP_LEFT_X, self.TOP_LEFT_Y))
+        display.flip()
+
     def on_cleanup(self):
         quit()
 
     def on_execute(self):
+        global game_state
+
         if self.on_init() is False:
             self._running = False
 
         # run and unload loading screen
+        su.game_state = su.GameState.LOADING
         self.loading_screen.run(self._display_surf)
         self.loading_screen = None
         # Displays intro message
-        fb.show_info_feedback("Welcome! Go to the ticket window (top left)." +
-                              "  The ticket is like request in a hash table")
+        fb.show_info_feedback(WELCOME)
 
-        while (self._running):
+        su.game_state = su.GameState.MAIN_LOOP
+        while (self._running and su.game_state == su.GameState.MAIN_LOOP):
             event.pump()
             keys = key.get_pressed()
 
             self.on_event(keys, event)
             self.on_loop()
             self.on_render()
+
+        if su.game_state == su.GameState.WON:
+            self.game_won()
 
         self.on_cleanup()

@@ -59,20 +59,22 @@ number_group = None
 ticket_group = None
 
 # Internal constants
-__CHEF_START_X__ = 400          # chef starting x coordinate
-__CHEF_START_Y__ = 200          # chef starting y coordinate
-__HASHER_START_X__ = 25         # hasher starting x coordinate
-__HASHER_START_Y__ = 200        # hasher starting y coordinate
-__COUNTERTOP_BUFFER__ = 50      # countertop buffer for separation
-__COUNTERTOP_WIDTH__ = 100      # TODO: FIND NON-HARD-CODED SOLUTION
-__COUNTERTOP_START_X__ = 200    # countertop starting x coordinate
-__COUNTERTOP_START_Y__ = 400    # countertop starting y coordinate
-__TICKET_START_X__ = -600       # ticket starting x coordinate
-__TICKET_START_Y__ = -600        # ticket starting y coordinate
-__TICKET_WINDOW_X__ = 0       # ticket window starting x coordinate
-__TICKET_WINDOW_Y__ = 0         # ticket window starting y coordinate
-__ORDER_WINDOW_X__ = 600        # order window starting x coordinate
-__ORDER_WINDOW_Y__ = 0         # order window starting y coordinate
+__CHEF_START_X__ = 400                  # chef starting x coordinate
+__CHEF_START_Y__ = 200                  # chef starting y coordinate
+__HASHER_START_X__ = 25                 # hasher starting x coordinate
+__HASHER_START_Y__ = 200                # hasher starting y coordinate
+__COUNTERTOP_BUFFER__ = 50              # countertop buffer for separation
+__COUNTERTOP_WIDTH__ = 100              # TODO: FIND NON-HARD-CODED SOLUTION
+__COUNTERTOP_START_X__ = 200            # countertop starting x coordinate
+__COUNTERTOP_START_Y__ = 400            # countertop starting y coordinate
+__TICKET_START_X__ = -600               # ticket starting x coordinate
+__TICKET_START_Y__ = -600               # ticket starting y coordinate
+__TICKET_WINDOW_X__ = 0                 # ticket window starting x coordinate
+__TICKET_WINDOW_Y__ = 0                 # ticket window starting y coordinate
+__ORDER_WINDOW_X__ = 600                # order window starting x coordinate
+__ORDER_WINDOW_Y__ = 0                  # order window starting y coordinate
+__NUM_TICKETS__ = 5                     # number of tickets in a game
+__NUM_FOOD_ITEMS__ = __NUM_TICKETS__    # number of food items
 
 
 def add_food(food):
@@ -266,7 +268,7 @@ def __init_countertop__():
 
     for food_type in FoodType:
         food = []
-        for food_count in range(0, 15):
+        for food_count in range(0, __NUM_FOOD_ITEMS__):
             food.append(Food(0, 0, food_type))
         number = Number(0, 0, food_type)
         countertop = Countertop(x, y, food, number)
@@ -315,7 +317,7 @@ def __init_window_group__():
     # TODO: remove hardcoded ticket call after demo
 
     # For loop will handle random ticket generation
-    for tickets in range(0, 15):
+    for tickets in range(0, __NUM_TICKETS__):
         random_number = randint(0, 3)
         ticket = Ticket(ticket_foods[random_number], __TICKET_START_X__, __TICKET_START_Y__)
         ticket_window.add_ticket(ticket)
