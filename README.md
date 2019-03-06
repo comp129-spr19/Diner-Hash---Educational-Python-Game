@@ -15,6 +15,7 @@
     - [Overflow II Guidelines](#overflow-ii-guidelines)
 - [Contributors](#contributors)
 - [Coding Conventions](#coding-conventions)
+- [Dependencies](#dependencies)
 - [Helpful Resources](#helpful-resources)
 
 Diner Hash is an educational game to teach prospective students about the Hash
@@ -175,6 +176,28 @@ See [this](https://chris.beams.io/posts/git-commit/) entertaining link on writin
 All Python files should follow the PyCodeStyle standard
 
 Lines should be wrapped at 80 characters for all other file types
+
+## Dependencies
+
+To run this application, one must be running a Windows system with
+```
+python3 (Anaconda Python 3.6.1 preferred)
+pygame (Version 1.9.4 preferred)
+```
+
+To install PyGame through the Anaconda prompt, run
+```
+pip install pygame
+```
+
+If your system has pip installed but not Anaconda, first try the command
+```
+pip install pygame
+```
+
+If this fails, see the following StackOverflow article for installing PyGame
+onto a Windows system.
+  <https://stackoverflow.com/questions/31968738/how-do-i-install-pygame-with-pip-in-python-3-4>
 
 ## Helpful Resources
 
