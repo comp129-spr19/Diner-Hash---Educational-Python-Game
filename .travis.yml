@@ -1,4 +1,11 @@
 language: python
 python:
   - 3.6.1
-script: python tests/unit_tests/imgs_load.py
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get build-dep -qq python-pygame
+  - sudo apt-get install -qq python-pygame
+install:
+  - pip install -r .travis_requirements.txt
+script:
+  - python tests/unit_tests/imgs_load.py
